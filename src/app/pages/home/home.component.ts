@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from '../../shared/header/header.component';
-import { SidebarLeftComponent } from '../../shared/sidebar-left/sidebar-left.component';
+import { HeaderComponent } from '../../core/header/header.component';
+import { SidebarLeftComponent } from '../../core/sidebar-left/sidebar-left.component';
 
 @Component({
   selector: 'app-home',
