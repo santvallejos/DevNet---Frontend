@@ -1,0 +1,16 @@
+nav {
+    transition: background-color 0.3s ease;
+  }
+  
+  nav:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  aside {
+    /* Estilo adicional para que el sidebar se mantenga siempre visible */
+    position: fixed; /* Mantener fijo al lado izquierdo */
+    height: 100vh; /* Altura completa */
+  }
+  
+  
+  

@@ -1,0 +1,56 @@
+<div class="flex h-full w-full">
+
+    <!-- Sección de login -->
+    <div class="flex min-h-full flex-col justify-center w-1/3 px-6 py-12 lg:px-8">
+        
+        <!-- Logo -->
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <img class="mx-auto h-10 w-auto" src="" alt="Your Company">
+            <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Iniciar Sesión</h2>
+        </div>
+
+        <!-- Formulario de login -->
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form class="space-y-6" action="#" method="POST">
+                <div>
+                    <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
+                    <div class="mt-2">
+                        <input id="email" name="email" type="email" autocomplete="email" required
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between">
+                        <label for="password" class="block text-sm/6 font-medium text-gray-900">Contraseña</label>
+                        <div class="text-sm">
+                            <a href="#" class="font-semibold text-blue-700 hover:text-blue-500">Olvidaste tu contraseña?</a>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm/6">
+                    </div>
+                </div>
+
+                <!-- Button de Login -->
+                <div>
+                    <button type="submit"
+                        class="flex w-full justify-center rounded-md bg-blue-700 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500">Sign
+                        in</button>
+                </div>
+            </form>
+
+            <p class="mt-10 text-center text-sm/6 text-gray-500">
+                No tienes cuenta?
+                <a routerLink="/register" class="font-semibold text-blue-700 hover:text-blue-500">Registrarse</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Sección de imagen -->
+    <div class="w-2/3 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1592151450113-bdf5982da169?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Image" class="w-full h-full object-cover">
+    </div>
+</div>
