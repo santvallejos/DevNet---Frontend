@@ -1,0 +1,25 @@
+.svgIcon path {
+    stroke-dasharray: 200 0;
+    stroke-dashoffset: 0;
+    stroke: white;
+    fill: #dddddd00;
+    transition-delay: 0s;
+    transition-duration: 0.5s;
+  }
+  
+  #checkboxInput:checked ~ .svgIcon path {
+    fill: white;
+    animation: bookmark 0.5s linear;
+    transition-delay: 0.5s;
+  }
+  
+  @keyframes bookmark {
+    0% {
+      stroke-dasharray: 0 200;
+      stroke-dashoffset: 80;
+    }
+    100% {
+      stroke-dasharray: 200 0;
+    }
+  }
+  
