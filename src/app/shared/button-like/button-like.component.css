@@ -1,0 +1,3 @@
+.buttonLike input:checked ~ svg {
+    fill: #E3474F;
+}

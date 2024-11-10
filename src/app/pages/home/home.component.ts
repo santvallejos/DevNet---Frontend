@@ -1,26 +1,25 @@
-import { Component } from '@angular/core';
-import { HeaderComponent } from '../../core/header/header.component';
-import { SidebarLeftComponent } from '../../core/sidebar-left/sidebar-left.component';
+import { Component, OnInit } from '@angular/core';
+import { FlowbiteService } from '../../services/flowbite.service';
+/* Components ux/ui */
+import { ButtonNavegationComponent } from '../../core/button-navegation/button-navegation.component';
+import { SidebarComponent } from '../../core/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, SidebarLeftComponent],
-  templateUrl: './home.component.html', //archivo HTML externo
-  styles: [] 
+  imports: [ButtonNavegationComponent, SidebarComponent],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
 })
+export class HomeComponent implements OnInit{
 
-export class HomeComponent {
-  sidebarVisible = false;
+  constructor(private flowbiteService: FlowbiteService) {}
 
-  toggleSidebar() {
-    this.sidebarVisible = !this.sidebarVisible;
-    const sidebar = document.querySelector('app-sidebar-left') as HTMLElement;
-    if (sidebar) {
-      sidebar.classList.toggle('-translate-x-full', !this.sidebarVisible);
-    }
+  //Llamar al servicio
+  ngOnInit(): void {
+    this.flowbiteService.loadFlowbite(flowbite => {
+      // Your custom code here
+      console.log('Flowbite loaded', flowbite);
+    });
   }
 }
-
-
-
