@@ -1,0 +1,17 @@
+/* Aplica la regla global para todos los enlaces */
+a {
+    cursor: pointer;
+    text-decoration: underline; /* Para dar el estilo estándar de enlace */
+  }
+  .bg-image {
+    background-image: url('/assets/redSocial.jpg');
+    background-size: cover; /* Asegura que la imagen cubra todo el área */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    min-height: 100vh; /* Asegura que la imagen ocupe toda la altura de la ventana */
+    display: flex; /* Asegura que el contenido en la sección se ajuste correctamente */
+    align-items: center; /* Centra el contenido verticalmente */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    position: relative; /* Necesario para posicionar el pseudo-elemento */
+}
+

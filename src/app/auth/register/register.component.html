@@ -1,0 +1,133 @@
+<div class="flex items-center justify-center min-h-screen">
+    <div class="flex flex-col w-[35rem] bg-white p-8 rounded-xl shadow-[0px_4px_15px_rgba(0,0,0,0.2)] mt-8 mb-8 animate__animated animate__fadeInUp">
+        <h2 class="text-center text-2xl font-semibold text-gray-900 mb-6">Crea una cuenta</h2>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+            <div class="flex space-x-4">
+                <div class="w-1/2">
+                    <label for="firstName" class="block text-sm font-medium text-gray-900">Nombre</label>
+                    <div class="mt-2">
+                        <input id="firstName" formControlName="firstName" type="text" placeholder="Nombre"
+                            class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <div *ngIf="form.get('firstName')?.invalid && (form.get('firstName')?.dirty || form.get('firstName')?.touched)" class="text-red-500">
+                            <div *ngIf="form.get('firstName')?.errors?.['required']">
+                                El nombre es requerido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-1/2">
+                    <label for="lastName" class="block text-sm font-medium text-gray-900">Apellido</label>
+                    <div class="mt-2">
+                        <input id="lastName" formControlName="lastName" type="text" placeholder="Apellido"
+                            class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <div *ngIf="form.get('lastName')?.invalid && (form.get('lastName')?.dirty || form.get('lastName')?.touched)" class="text-red-500">
+                            <div *ngIf="form.get('lastName')?.errors?.['required']">
+                                El apellido es requerido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex space-x-4">
+                <div class="w-1/2">
+                    <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+                    <div class="mt-2">
+                        <input id="email" formControlName="email" type="email" placeholder="Email"
+                            class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)" class="text-red-500">
+                            <div *ngIf="form.get('email')?.errors?.['required']">
+                                El email es requerido.
+                            </div>
+                            <div *ngIf="form.get('email')?.errors?.['email']">
+                                El email debe tener un formato válido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-1/2">
+                    <label for="dateOfBirth" class="block text-sm font-medium text-gray-900">Fecha de Nacimiento</label>
+                    <div class="mt-2">
+                        <input id="dateOfBirth" formControlName="dateOfBirth" type="date" 
+                            class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between">
+                    <label for="password" class="block text-sm font-medium text-gray-900">Contraseña</label>
+                </div>
+
+                <!-- Contenedor de input de contraseña y botón de ojo -->
+                <div class="mt-2 relative">
+                    <div class="flex items-center border rounded-md shadow-sm ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-blue-500">
+                        <input 
+                            id="password" 
+                            formControlName="password" 
+                            [type]="showPassword ? 'text' : 'password'" 
+                            placeholder="Contraseña" 
+                            required
+                            class="w-full px-3 py-1.5 text-gray-900 border-none focus:outline-none rounded-md sm:text-sm">
+                        
+                        <!-- Botón para mostrar/ocultar contraseña -->
+                        <button 
+                            type="button" 
+                            (click)="togglePasswordVisibility()" 
+                            class="px-3 text-gray-500 focus:outline-none">
+                            <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Validación de contraseña en rojo -->
+                    <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)" class="text-red-600 mt-2">
+                        <div *ngIf="form.get('password')?.errors?.['required']">
+                            La contraseña es requerida.
+                        </div>
+                        <div *ngIf="form.get('password')?.errors?.['minlength']">
+                            La contraseña debe tener al menos 6 caracteres.
+                        </div>
+                        <div *ngIf="form.get('password')?.errors?.['pattern']">
+                            La contraseña debe contener al menos una letra y un número.
+                        </div>
+                    </div>   
+                </div>
+            </div>
+
+            <div>
+                <label for="profilePicture" class="block text-sm font-medium text-gray-900 grid-inputs">Foto de Perfil</label>
+                <div class="flex justify-center items-center">
+                    <img [src]="selectedFile || './assets/blank-profile.png'" alt="Foto de perfil" class="rounded-full w-32 h-32 object-cover">
+                </div>            
+                <div class="mt-2">
+                    <button type="button" (click)="fileInput.click()" 
+                            class="bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 focus:outline-none active:bg-gray-200">
+                        Elegir una foto de perfil
+                    </button>
+
+                    <input hidden id="profilePicture" type="file" (change)="onFileChange($event)" #fileInput>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                    class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Registrarse
+                </button>
+            </div>
+        </form>
+
+        <!-- Enlace de "Ya tengo cuenta" debajo del botón de registro con routerLink -->
+        <div class="mt-2 text-center">
+            <p class="text-center text-sm text-gray-500">
+                ¿Ya tienes cuenta?
+                <a (click)="goToLogin()" class="text-blue-600 underline hover:text-blue-600 focus:outline-none cursor-pointer">
+                Inicia sesión
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #1f2937; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    width: 100%; /* Asegúrate de que ocupe el 100% del ancho */
+    position: fixed; /* Fijo en la parte superior */
+    top: 0; /* Posición en la parte superior */
+    left: 0; /* Alineación a la izquierda */
+    z-index: 10; /* Asegúrate de que esté por encima de otros elementos */
+  }
+  
+  .relative {
+    position: relative; /* Posicionamiento relativo para el menú desplegable */
+  }
+  
+  button {
+    display: flex;
+    align-items: center;
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    color: inherit; /* Hereda el color */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+  }
+  
+  .absolute {
+    position: absolute; /* Posicionamiento absoluto para el menú desplegable */
+    right: 0; /* Alineación a la derecha */
+    margin-top: 0.5rem; /* Margen superior */
+    width: 12rem; /* Ancho del menú */
+    background-color: #ffffff; /* Color de fondo del menú */
+    color: #1f2937; /* Color del texto del menú */
+    border-radius: 0.375rem; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra del menú */
+    z-index: 20; /* Z-index para que aparezca sobre otros elementos */
+  }
+  
+  a {
+    display: block; /* Elemento de bloque para el enlace */
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    text-decoration: none; /* Sin subrayado */
+  }
+  
+  a:hover {
+    background-color: #e5e7eb; /* Color de fondo al pasar el ratón */
+  }
+  

@@ -1,0 +1,118 @@
+<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16 bg-image">
+    <div class="mx-auto grid max-w-screen-xl px-4 pb-8 md:grid-cols-12 lg:gap-12 lg:pb-16 xl:gap-0">
+    
+      <!-- Lado izquierdo con el formulario de login dentro de un card -->
+      <div class="md:col-span-3 md:text-start flex justify-start">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full sm:max-w-sm">
+          <!-- Logo -->
+          <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <img class="mx-auto h-10 w-auto" src="" alt="Your Company">
+            <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">Iniciar Sesión</h2>
+          </div>
+  
+          <!-- Formulario de Login -->
+          <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+              <!-- Email -->
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+                <div class="mt-2">
+                  <input id="email" formControlName="email" type="email" placeholder="Email" required
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm">
+                  <!-- Validación de Email -->
+                  <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)" class="text-red-600 mt-2">
+                    <div *ngIf="form.get('email')?.errors?.['required']">
+                      El Email es requerido.
+                    </div>
+                    <div *ngIf="form.get('email')?.errors?.['email']">
+                      El Email debe tener un formato válido.
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Contraseña -->
+              <div>
+                <div class="flex items-center justify-between">
+                  <label for="password" class="block text-sm font-medium text-gray-900">Contraseña</label>
+                  <div class="text-sm">
+                    <a href="#" class="font-semibold text-blue-700 hover:text-blue-500">¿Olvidaste tu contraseña?</a>
+                  </div>
+                </div>
+  
+                <!-- Input Contraseña y Botón de Ojo -->
+                <div class="mt-2 relative">
+                  <div class="flex items-center border rounded-md shadow-sm ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-blue-500">
+                    <input 
+                      id="password" 
+                      formControlName="password" 
+                      [type]="showPassword ? 'text' : 'password'" 
+                      placeholder="Contraseña" 
+                      required
+                      class="w-full px-3 py-1.5 text-gray-900 border-none focus:outline-none rounded-md sm:text-sm">
+                    <!-- Botón para Mostrar/Ocultar Contraseña -->
+                    <button 
+                      type="button" 
+                      (click)="togglePasswordVisibility()" 
+                      class="px-3 text-gray-500 focus:outline-none">
+                      <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                    </button>
+                  </div>
+  
+                  <!-- Validación de Contraseña -->
+                  <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)" class="text-red-600 mt-2">
+                    <div *ngIf="form.get('password')?.errors?.['required']">
+                      La contraseña es requerida.
+                    </div>
+                    <div *ngIf="form.get('password')?.errors?.['minlength']">
+                      La contraseña debe tener al menos 6 caracteres.
+                    </div>
+                    <div *ngIf="form.get('password')?.errors?.['pattern']">
+                      La contraseña debe contener al menos una letra y un número.
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Botón de Login -->
+              <div>
+                <button type="submit"
+                  class="flex w-full justify-center rounded-md bg-blue-700 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-blue-500">
+                  Iniciar sesión
+                </button>
+              </div>
+            </form>
+  
+            <!-- Enlace para Registro -->
+            <p class="mt-10 text-center text-sm text-gray-500">
+              ¿No tienes cuenta?
+              <button (click)="goToRegister()" class="text-blue-600 underline hover:text-blue-500 focus:outline-none">
+                Registrarse
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Lado derecho con la imagen y texto -->
+      <div class="md:col-span-9 flex items-center justify-center">
+        <div class="text-center text-white">
+            <h1 class="text-4xl sm:text-6xl font-bold leading-tight mb-10" style="font-family: 'Poppins', sans-serif;">
+                DevNet <span class="text-yellow-400" style="font-family: 'Montserrat', sans-serif;">Tu Red Social Profesional</span>
+              </h1>
+              
+              
+            <p class="text-lg sm:text-2xl mb-6">
+                Únete a una red de profesionales, haz crecer tu carrera y conecta con oportunidades que te impulsan al siguiente nivel.
+            </p>
+        </div>
+      </div>
+    
+
+  
+    </div>
+  </section>
+  
+  
+
+  

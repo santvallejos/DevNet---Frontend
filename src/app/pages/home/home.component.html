@@ -1,0 +1,19 @@
+<app-header></app-header>
+
+<div class="flex mt-16"> <!-- Añadir margen superior para evitar que el contenido quede detrás del header -->
+  <app-sidebar-left></app-sidebar-left>
+  <main class="flex-1 p-4">
+    <p *ngIf="!sidebarVisible">Usuario No Autenticado</p>
+    <p>Usuario Autenticado</p>
+    <h1 class="text-2xl font-bold">Bienvenido a tu red social</h1>
+    <!-- Aquí va el contenido principal de la página -->
+  </main>
+</div>
+
+
+
+
+
+
+
+  

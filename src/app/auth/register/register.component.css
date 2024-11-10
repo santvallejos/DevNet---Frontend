@@ -1,0 +1,27 @@
+.register-container {
+    background-color: #f9fafb; /* Fondo gris claro */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: #374151; /* Color del texto */
+  }
+  
+  button {
+    transition: background-color 0.3s; /* Transición suave para el botón */
+  }
+  
+  button:hover {
+    background-color: #3b82f6; /* Color más oscuro al pasar el mouse */
+  }
+
+  .profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  
