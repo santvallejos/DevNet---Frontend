@@ -1,14 +1,14 @@
 .svgIcon path {
     stroke-dasharray: 200 0;
     stroke-dashoffset: 0;
-    stroke: white;
+    stroke: black;
     fill: #dddddd00;
     transition-delay: 0s;
     transition-duration: 0.5s;
   }
   
   #checkboxInput:checked ~ .svgIcon path {
-    fill: white;
+    fill: black;
     animation: bookmark 0.5s linear;
     transition-delay: 0.5s;
   }
