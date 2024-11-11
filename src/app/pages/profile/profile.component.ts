@@ -2,15 +2,13 @@ import { Component } from '@angular/core';
 import { FlowbiteService } from '../../services/flowbite.service';
 /* component ux-ui */
 import { SidebarComponent } from '../../core/sidebar/sidebar.component';
-import { ButtonLikeComponent } from '../../shared/button-like/button-like.component';
-import { ButtonSaveComponent } from '../../shared/button-save/button-save.component';
-
+import { PublicationComponent } from '../../core/publication/publication.component';
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [SidebarComponent, ButtonLikeComponent, ButtonSaveComponent],
+  imports: [SidebarComponent, PublicationComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
