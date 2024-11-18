@@ -1,25 +1,57 @@
-.svgIcon path {
-    stroke-dasharray: 200 0;
-    stroke-dashoffset: 0;
-    stroke: black;
-    fill: #dddddd00;
-    transition-delay: 0s;
-    transition-duration: 0.5s;
+/* From Uiverse.io by catraco */ 
+/*------ Settings ------*/
+.container {
+    --color: #a5a5b0;
+    --size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: var(--size);
+    user-select: none;
+    fill: var(--color);
   }
   
-  #checkboxInput:checked ~ .svgIcon path {
-    fill: black;
-    animation: bookmark 0.5s linear;
-    transition-delay: 0.5s;
+  .container .save-regular {
+    position: absolute;
+    animation: keyframes-fill .5s;
+    transform-origin: top;
   }
   
-  @keyframes bookmark {
+  .container .save-solid {
+    position: absolute;
+    animation: keyframes-fill .5s;
+    display: none;
+    transform-origin: top;
+  }
+  
+  /* ------ On check event ------ */
+  .container input:checked ~ .save-regular {
+    display: none;
+  }
+  
+  .container input:checked ~ .save-solid {
+    display: block;
+  }
+  
+  /* ------ Hide the default checkbox ------ */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* ------ Animation ------ */
+  @keyframes keyframes-fill {
     0% {
-      stroke-dasharray: 0 200;
-      stroke-dashoffset: 80;
+      transform: scale(0);
+      opacity: 0;
     }
-    100% {
-      stroke-dasharray: 200 0;
+  
+    50% {
+      transform: scaleY(1.2);
     }
   }
-  
