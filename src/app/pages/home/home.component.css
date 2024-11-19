@@ -1,0 +1,15 @@
+@media (min-width: 1024px)
+{
+    .publicationsHome{
+        width: 60%;
+        overflow: auto;
+        overflow-wrap: break-word;
+    }
+}
+
+@media (max-width: 1024px)
+{
+    .contentHome{
+        padding-top: 3rem;
+    }
+}
