@@ -1,54 +1,124 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { LoginRequest } from './loginRequest'; // Import the LoginRequest model if required
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
+import { LoginRequest, RegisterRequest, User } from '../core/models/user';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private registerApiUrl = 'https://api.tuapp.com/auth/register';
-  private loginApiUrl = 'https://api.tuapp.com/auth/login';
-  private recoverPasswordApiUrl = 'https://api.tuapp.com/auth/recover-password'; // Add this for actual API endpoint
+  base_url = environment.base_url;
 
-  constructor() {}
+  currentUser: User = new User();
+  currentUserSubject: BehaviorSubject<User>;
 
-  // Método simulado para el registro
-  register(data: LoginRequest): Observable<any> {
-    // Simulando respuesta exitosa del backend con un objeto de ejemplo
-    return of({
-      success: true,
-      message: 'Registro exitoso',
-      data: { firstName: data.get('firstName'), lastName: data.get('lastName') },
+  constructor(private http: HttpClient, private router: Router,  @Inject(PLATFORM_ID) private platformId: Object, private toastr: ToastrService ) {
+    if (isPlatformBrowser(this.platformId)) {
+      const storedEmail = localStorage.getItem('userEmail');
+      this.currentUser.email = storedEmail ? storedEmail : '';
+    } else {
+      this.currentUser.email = '';
+    }
+    this.currentUserSubject = new BehaviorSubject<User>(this.currentUser);
+  }
+
+  // Métodos auxiliares para manejo de localStorage
+  private setItem(key: string, value: string): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(key, value);
+    }
+  }
+
+  private getItem(key: string): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem(key);
+    }
+    return null;
+  }
+
+  private clearStorage(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.clear();
+    }
+  }
+
+  // Métodos principales
+  login(loginForm: LoginRequest){
+    return this.http.post(`${this.base_url}/Auth/login`, loginForm)
+    .pipe(
+      map((response: any)=>{
+        localStorage.setItem('userSession', JSON.stringify(response))
+        localStorage.setItem('userEmail', loginForm.username);
+        return response;
+      })
+    );
+  }
+
+
+  register(registerData: RegisterRequest) {
+    return this.http.post(`${this.base_url}/Auth/register`, registerData).subscribe({
+      next: (response) => {
+        // Almacenamos la respuesta y el email en localStorage
+        localStorage.setItem('userSession', JSON.stringify(response));
+        localStorage.setItem('userEmail', registerData.username);
+        // Redirigimos a la página de inicio
+        this.router.navigate(['pages/home']);
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.error && error.error.length >= 1) {
+          // Aseguramos que error.error esté presente y tiene una longitud mayor o igual a 1
+          error.error.forEach((errorMsg: { description: string }) => {
+            this.toastr.error(errorMsg.description); // Mostrar mensaje de error
+          });
+        } else {
+          // Manejo de error general si no tiene el formato esperado
+          this.toastr.error('Ocurrió un error inesperado.');
+        }
+      }
     });
+  }
+  
 
-    // Descomentar cuando el backend real esté disponible:
-    /*
-    return this.http.post<any>(this.registerApiUrl, data);
-    */
+  isLogged(): boolean {
+    return this.getItem('userSession') !== null;
   }
 
-  // Método simulado para el login
-  login(credentials: LoginRequest): Observable<any> {
-    // Simulando la respuesta del backend con un objeto de ejemplo
-    return of({ token: 'fake-jwt-token' }); // Simula una respuesta de login
-
-    // Para cuando el backend esté listo:
-    /*
-    return this.http.post<any>(this.loginApiUrl, credentials);
-    */
+  logout(): void {
+    this.clearStorage();
+    this.router.navigate(['auth/login']);
   }
 
-  // Método para simular la recuperación de contraseña
+  sendResetPasswordLink(email: string): Observable<any> {
+    // Simulamos el envío de un correo para la recuperación de la contraseña
+    return of({ message: 'Correo de recuperación enviado con éxito' }).pipe(
+      // Si se recibe la respuesta de éxito, mostramos el mensaje con Toastr
+      tap((response: { message: string | undefined; }) => {
+        // Muestra un mensaje de éxito sin imprimir en consola
+        this.toastr.success(response.message, 'Éxito', { timeOut: 3000 });
+      })
+    );
+  }
+
   recoverPassword(email: string): Observable<any> {
-    // Simulando respuesta exitosa del backend
+    // Simulamos el envío de un correo para la recuperación de la contraseña
     return of({
       success: true,
       message: `Password recovery link sent to ${email}`,
-    });
-
-    // Descomentar cuando el backend real esté disponible:
-    /*
-    return this.http.post<any>(this.recoverPasswordApiUrl, { email });
-    */
+    }).pipe(
+      // Si la respuesta tiene éxito, mostramos el mensaje con Toastr
+      tap(response => {
+        if (response.success) {
+          this.toastr.success(response.message, 'Éxito', { timeOut: 3000 });
+        } else {
+          this.toastr.error('Hubo un error al enviar el correo de recuperación.', 'Error', { timeOut: 3000 });
+        }
+      })
+    );
   }
 }

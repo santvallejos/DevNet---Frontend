@@ -2,7 +2,7 @@
     <div class="flex flex-col w-[35rem] bg-white p-8 rounded-xl shadow-[0px_4px_15px_rgba(0,0,0,0.2)] mt-8 mb-8 animate__animated animate__fadeInUp">
         <h2 class="text-center text-2xl font-semibold text-gray-900 mb-6">Crea una cuenta</h2>
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+        <form [formGroup]="form" (ngSubmit)="registerUser()" class="space-y-6">
             <div class="flex space-x-4">
                 <div class="w-1/2">
                     <label for="firstName" class="block text-sm font-medium text-gray-900">Nombre</label>
@@ -108,7 +108,7 @@
                         Elegir una foto de perfil
                     </button>
 
-                    <input hidden id="profilePicture" type="file" (change)="onFileChange($event)" #fileInput>
+                    <input hidden id="profilePicture" type="file" (change)="onFileSelected($event)" #fileInput>
                 </div>
             </div>
 

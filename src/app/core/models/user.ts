@@ -1,20 +1,26 @@
+export class User{
+  email: string = '';  
+  token: string = '';  
+}
+
 export interface LoginRequest {
-    get(arg0: string): any;
-    email: string,
+    username: string,
     password: string,
 }
 
 export interface RegisterRequest {
     firstName: string;
     lastName: string;
+    username: string;
     email: string;
     password: string;
     profilePicture: File | null;
-    dateOfBirth: Date; 
+   // dateOfBirth: Date; 
   }
-  
+
  
 export interface RecoverPasswordResponse {
     success: boolean;
     message: string;
   }
+

@@ -2,87 +2,102 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { RegisterRequest } from '../../core/models/user';
 
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './register.component.html',
+  templateUrl:'./register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit {
-  form: FormGroup;
-  showPassword = false;
-  selectedFile: any;
- 
+export class RegisterComponent {
+  form: FormGroup; // Variable que almacenará el formulario reactivo.
+  showPassword = false; // Variable para controlar la visibilidad de la contraseña.
+  selectedFile: any; // Variable para almacenar la imagen seleccionada.
 
-  constructor(private fb: FormBuilder, private route: Router) {
-    // Inicializar el formulario en el constructor
+  constructor(private fb: FormBuilder, private route: Router, private authService: AuthService) {
+    // Inicializa el formulario con validaciones en el constructor.
     this.form = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      profilePicture: [null],
-      dateOfBirth: ['', Validators.required] // Agregar el control de fecha de nacimiento
+      firstName: ['', Validators.required], // Primer nombre, obligatorio.
+      lastName: ['', Validators.required], // Apellido, obligatorio.
+      username: ['',Validators.required],
+      email: ['', [Validators.required, Validators.email]], // Correo electrónico con validación de formato.
+      password: ['', [Validators.required, Validators.minLength(6)]], // Contraseña, con validación de mínimo de 6 caracteres.
+      profilePicture: [null], // Almacenará la foto de perfil.
+     // dateOfBirth: ['', Validators.required] // Fecha de nacimiento, obligatorio.
     });
   }
 
-  ngOnInit(): void {
-    // Cualquier lógica adicional de inicialización
-  }
-
+  /**
+   * Método para alternar la visibilidad de la contraseña en el formulario.
+   */
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  onFileChange(event: Event) {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput?.files?.[0]) {
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-      
-      reader.onload = () => {
-        this.selectedFile = reader.result; // Asignar la imagen leída a selectedFile
-      };
-      
-      reader.readAsDataURL(file); // Leer el archivo como URL de datos
+  /**
+   * Método que se ejecuta cuando se selecciona un archivo de imagen (profilePicture).
+   * Valida el tipo de archivo y, si es válido, lo carga como una imagen base64.
+   * 
+   * @param event Evento de selección de archivo.
+   */
+  onFileSelected(event: any) {
+    const file = event.target.files[0]; // Obtener el archivo seleccionado.
+    // Validar el tipo de archivo (solo imágenes).
+    if (file) {
+      const fileType = file.type;
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif']; // Tipos de archivo permitidos.
+
+      if (allowedTypes.includes(fileType)) {
+        const reader = new FileReader(); // Crear un lector de archivos.
+        reader.onload = (e: ProgressEvent<FileReader>) => {
+          this.selectedFile = e.target?.result; // Guardar el archivo leído como base64.
+        };
+        reader.readAsDataURL(file); // Leer el archivo como URL de datos.
+      } else {
+        alert('Solo se permiten imágenes en formato PNG, JPEG, JPG, WebP y GIF'); // Mensaje de error si el formato no es válido.
+      }
     }
   }
 
- 
-  onSubmit() {
-    if (this.form.valid) {
-      const formData = new FormData();
-      const formValue = this.form.value;
-      
-      formData.append('firstName', formValue.firstName);
-      formData.append('lastName', formValue.lastName);
-      formData.append('email', formValue.email);
-      formData.append('password', formValue.password);
-      formData.append('dateOfBirth', formValue.dateOfBirth); // Agregar fecha de nacimiento
-      
-      if (this.selectedFile) {
-        // formData.append('profilePicture', this.selectedFile);
-      }
+  updateUsername() {
+    const firstName = this.form.get('firstName')?.value;
+    const lastName = this.form.get('lastName')?.value;
 
-      // Llamada al servicio para registrar
-      // this.authRegisterService.register(formData).subscribe({
-      //   next: (response: any) => {
-      //     console.log('Registration successful', response);
-      //   },
-      //   error: (error: any) => {
-      //     console.error('Registration failed', error);
-      //   }
-      // })
-  }
+    if (firstName && lastName) {
+      // Genera el nombre de usuario combinando el primer nombre y apellido.
+      this.form.get('username')?.setValue(`${firstName.toLowerCase()}.${lastName.toLowerCase()}`, { emitEvent: false });
+    }
   }
 
- goToLogin(){
-  this.route.navigate(['/'])
- }
 
- 
+  /**
+   * Método que maneja el envío del formulario de registro.
+   * Valida que el formulario esté correcto y luego prepara los datos para enviarlos.
+   */
+  registerUser() {  
+      // Crear el objeto userToRegister con los valores del formulario.
+      const userToRegister: RegisterRequest = {
+        firstName: this.form.get('firstName')?.value,
+        lastName: this.form.get('lastName')?.value,
+        username: `${this.form.get('firstName')?.value} ${this.form.get('lastName')?.value}`, 
+        email: this.form.get('email')?.value,
+        password: this.form.get('password')?.value,
+        profilePicture: this.form.get('profilePicture')?.value, // Si se seleccionó una foto, la añade. Si no, es null.
+       // dateOfBirth: this.form.get('dateOfBirth')?.value
+      };
+      return this.authService.register(userToRegister);
+    }
+  
+  
 
+  /**
+   * Método para redirigir al usuario a la página de inicio de sesión.
+   */
+  goToLogin() {
+    this.route.navigate(['auth/loign']); // Navegar a la ruta de inicio de sesión.
+  }
 }

@@ -15,3 +15,6 @@ a {
     position: relative; /* Necesario para posicionar el pseudo-elemento */
 }
 
+.ngb-toast {
+  z-index: 9999 !important;  /* Asegura que el Toastr se muestre sobre otros elementos */
+}
