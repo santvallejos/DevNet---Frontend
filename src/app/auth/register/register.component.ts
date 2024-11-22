@@ -46,22 +46,29 @@ export class RegisterComponent {
    */
   onFileSelected(event: any) {
     const file = event.target.files[0]; // Obtener el archivo seleccionado.
-    // Validar el tipo de archivo (solo imágenes).
     if (file) {
       const fileType = file.type;
-      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif']; // Tipos de archivo permitidos.
-
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif']; // Tipos permitidos.
+  
       if (allowedTypes.includes(fileType)) {
         const reader = new FileReader(); // Crear un lector de archivos.
         reader.onload = (e: ProgressEvent<FileReader>) => {
-          this.selectedFile = e.target?.result; // Guardar el archivo leído como base64.
+          this.selectedFile = e.target?.result as string;
+          
+          // Asegurarse de que el valor tenga el formato correcto
+          const fileExtension = fileType.split('/')[1]; // 'png', 'jpeg', etc.
+          this.selectedFile = `data:image/${fileExtension};base64,` + this.selectedFile.split(',')[1]; // Agregar el prefijo correcto
+          
+          this.form.get('profilePicture')?.setValue(this.selectedFile); // Asignar la imagen al formulario
         };
-        reader.readAsDataURL(file); // Leer el archivo como URL de datos.
+        reader.readAsDataURL(file); // Leer el archivo como URL de datos
       } else {
-        alert('Solo se permiten imágenes en formato PNG, JPEG, JPG, WebP y GIF'); // Mensaje de error si el formato no es válido.
+        alert('Solo se permiten imágenes en formato PNG, JPEG, JPG, WebP y GIF');
       }
     }
   }
+  
+  
 
   updateUsername() {
     const firstName = this.form.get('firstName')?.value;
@@ -89,6 +96,7 @@ export class RegisterComponent {
         profileImageUrl: this.form.get('profilePicture')?.value, // Si se seleccionó una foto, la añade. Si no, es null.
        // dateOfBirth: this.form.get('dateOfBirth')?.value
       };
+      console.log(this.selectedFile); // Verifica si la imagen está en formato base64
       return this.authService.register(userToRegister);
     }
   
