@@ -13,6 +13,8 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
 import { AppRoutingModule } from './app.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { SidebarComponent } from './core/sidebar/sidebar.component';
+import { PublicationComponent } from './core/publication/publication.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule, 
-    ToastrModule.forRoot(), 
+    ToastrModule.forRoot(),
+    SidebarComponent,
+    PublicationComponent,
   ],
   bootstrap: [AppComponent]
 })
