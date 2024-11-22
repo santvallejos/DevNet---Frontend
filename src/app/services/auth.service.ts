@@ -13,7 +13,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AuthService {
   base_url = environment.base_url;
-
   currentUser: User = new User();
   currentUserSubject: BehaviorSubject<User>;
 
@@ -54,6 +53,7 @@ export class AuthService {
       map((response: any)=>{
         localStorage.setItem('userSession', JSON.stringify(response))
         localStorage.setItem('userEmail', loginForm.username);
+        localStorage.setItem('userRole', response.data.role);
         return response;
       })
     );
@@ -62,14 +62,14 @@ export class AuthService {
 
   register(registerData: RegisterRequest) {
     return this.http.post(`${this.base_url}/Auth/register`, registerData).subscribe({
-      next: (response) => {
+      next: response => {
         // Almacenamos la respuesta y el email en localStorage
         localStorage.setItem('userSession', JSON.stringify(response));
         localStorage.setItem('userEmail', registerData.username);
         // Redirigimos a la página de inicio
         this.router.navigate(['pages/home']);
       },
-      error: (error) => {
+      error: error => {
         console.log(error);
         if (error.error && error.error.length >= 1) {
           // Aseguramos que error.error esté presente y tiene una longitud mayor o igual a 1

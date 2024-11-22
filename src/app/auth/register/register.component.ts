@@ -23,7 +23,7 @@ export class RegisterComponent {
     this.form = this.fb.group({
       firstName: ['', Validators.required], // Primer nombre, obligatorio.
       lastName: ['', Validators.required], // Apellido, obligatorio.
-      username: ['',Validators.required],
+      username: [{ value: '', disabled: true }, Validators.required],
       email: ['', [Validators.required, Validators.email]], // Correo electrónico con validación de formato.
       password: ['', [Validators.required, Validators.minLength(6)]], // Contraseña, con validación de mínimo de 6 caracteres.
       profilePicture: [null], // Almacenará la foto de perfil.
@@ -81,12 +81,12 @@ export class RegisterComponent {
   registerUser() {  
       // Crear el objeto userToRegister con los valores del formulario.
       const userToRegister: RegisterRequest = {
-        firstName: this.form.get('firstName')?.value,
+        name: this.form.get('firstName')?.value,
         lastName: this.form.get('lastName')?.value,
-        username: `${this.form.get('firstName')?.value} ${this.form.get('lastName')?.value}`, 
+        username: this.form.get('username')?.value, 
         email: this.form.get('email')?.value,
         password: this.form.get('password')?.value,
-        profilePicture: this.form.get('profilePicture')?.value, // Si se seleccionó una foto, la añade. Si no, es null.
+        profileImageUrl: this.form.get('profilePicture')?.value, // Si se seleccionó una foto, la añade. Si no, es null.
        // dateOfBirth: this.form.get('dateOfBirth')?.value
       };
       return this.authService.register(userToRegister);
@@ -98,6 +98,6 @@ export class RegisterComponent {
    * Método para redirigir al usuario a la página de inicio de sesión.
    */
   goToLogin() {
-    this.route.navigate(['auth/loign']); // Navegar a la ruta de inicio de sesión.
+    this.route.navigate(['auth/login']); // Navegar a la ruta de inicio de sesión.
   }
 }

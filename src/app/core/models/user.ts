@@ -9,12 +9,12 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-    firstName: string;
+    name: string;
     lastName: string;
-    username: string;
     email: string;
+    username: string;
     password: string;
-    profilePicture: File | null;
+    profileImageUrl: File | null;
    // dateOfBirth: Date; 
   }
 

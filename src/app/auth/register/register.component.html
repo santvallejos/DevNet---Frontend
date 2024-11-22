@@ -7,8 +7,12 @@
                 <div class="w-1/2">
                     <label for="firstName" class="block text-sm font-medium text-gray-900">Nombre</label>
                     <div class="mt-2">
-                        <input id="firstName" formControlName="firstName" type="text" placeholder="Nombre"
-                            class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <input id="firstName" 
+                               formControlName="firstName" 
+                               type="text" 
+                               placeholder="Nombre"
+                               (input)="updateUsername()"
+                               class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         <div *ngIf="form.get('firstName')?.invalid && (form.get('firstName')?.dirty || form.get('firstName')?.touched)" class="text-red-500">
                             <div *ngIf="form.get('firstName')?.errors?.['required']">
                                 El nombre es requerido.
@@ -20,8 +24,12 @@
                 <div class="w-1/2">
                     <label for="lastName" class="block text-sm font-medium text-gray-900">Apellido</label>
                     <div class="mt-2">
-                        <input id="lastName" formControlName="lastName" type="text" placeholder="Apellido"
-                            class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <input id="lastName" 
+                               formControlName="lastName" 
+                               type="text" 
+                               placeholder="Apellido"
+                               (input)="updateUsername()"
+                               class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         <div *ngIf="form.get('lastName')?.invalid && (form.get('lastName')?.dirty || form.get('lastName')?.touched)" class="text-red-500">
                             <div *ngIf="form.get('lastName')?.errors?.['required']">
                                 El apellido es requerido.
@@ -35,8 +43,11 @@
                 <div class="w-1/2">
                     <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
                     <div class="mt-2">
-                        <input id="email" formControlName="email" type="email" placeholder="Email"
-                            class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <input id="email" 
+                               formControlName="email" 
+                               type="email" 
+                               placeholder="Email"
+                               class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)" class="text-red-500">
                             <div *ngIf="form.get('email')?.errors?.['required']">
                                 El email es requerido.
@@ -49,10 +60,14 @@
                 </div>
 
                 <div class="w-1/2">
-                    <label for="dateOfBirth" class="block text-sm font-medium text-gray-900">Fecha de Nacimiento</label>
+                    <label for="username" class="block text-sm font-medium text-gray-900">Username</label>
                     <div class="mt-2">
-                        <input id="dateOfBirth" formControlName="dateOfBirth" type="date" 
-                            class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <input id="username" 
+                               formControlName="username" 
+                               type="text" 
+                               readonly
+                               placeholder="Se generará automáticamente"
+                               class="block w-full rounded-md border-2 border-gray-300 py-2 px-4 text-gray-900 shadow-sm bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     </div>
                 </div>
             </div>
@@ -62,7 +77,6 @@
                     <label for="password" class="block text-sm font-medium text-gray-900">Contraseña</label>
                 </div>
 
-                <!-- Contenedor de input de contraseña y botón de ojo -->
                 <div class="mt-2 relative">
                     <div class="flex items-center border rounded-md shadow-sm ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-blue-500">
                         <input 
@@ -73,7 +87,6 @@
                             required
                             class="w-full px-3 py-1.5 text-gray-900 border-none focus:outline-none rounded-md sm:text-sm">
                         
-                        <!-- Botón para mostrar/ocultar contraseña -->
                         <button 
                             type="button" 
                             (click)="togglePasswordVisibility()" 
@@ -81,8 +94,7 @@
                             <i [ngClass]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
                         </button>
                     </div>
-                    
-                    <!-- Validación de contraseña en rojo -->
+
                     <div *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)" class="text-red-600 mt-2">
                         <div *ngIf="form.get('password')?.errors?.['required']">
                             La contraseña es requerida.
@@ -103,29 +115,33 @@
                     <img [src]="selectedFile || './assets/blank-profile.png'" alt="Foto de perfil" class="rounded-full w-32 h-32 object-cover">
                 </div>            
                 <div class="mt-2">
-                    <button type="button" (click)="fileInput.click()" 
+                    <button type="button" 
+                            (click)="fileInput.click()" 
                             class="bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-200 focus:outline-none active:bg-gray-200">
                         Elegir una foto de perfil
                     </button>
 
-                    <input hidden id="profilePicture" type="file" (change)="onFileSelected($event)" #fileInput>
+                    <input hidden 
+                           id="profilePicture" 
+                           type="file" 
+                           (change)="onFileSelected($event)" 
+                           #fileInput>
                 </div>
             </div>
 
             <div>
                 <button type="submit"
-                    class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     Registrarse
                 </button>
             </div>
         </form>
 
-        <!-- Enlace de "Ya tengo cuenta" debajo del botón de registro con routerLink -->
         <div class="mt-2 text-center">
             <p class="text-center text-sm text-gray-500">
                 ¿Ya tienes cuenta?
                 <a (click)="goToLogin()" class="text-blue-600 underline hover:text-blue-600 focus:outline-none cursor-pointer">
-                Inicia sesión
+                    Inicia sesión
                 </a>
             </p>
         </div>
