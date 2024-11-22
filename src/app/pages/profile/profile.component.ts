@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FlowbiteService } from '../../services/flowbite.service';
-import { CommonModule } from '@angular/common';
-/* Components ux/ui */
+/* component ux-ui */
 import { SidebarComponent } from '../../core/sidebar/sidebar.component';
 import { PublicationComponent } from '../../core/publication/publication.component';
 
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, PublicationComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  imports: [SidebarComponent, PublicationComponent],
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.css'
 })
-export class HomeComponent implements OnInit{
+export class ProfileComponent {
 
   constructor(private flowbiteService: FlowbiteService) {}
 

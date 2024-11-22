@@ -8,6 +8,8 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { NgModule } from '@angular/core';
 import { loginGuard } from './core/guards/login.guard';
 import { accessGuard } from './core/guards/access.guard';
+import { MessagesComponent } from './pages/messages/messages.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +38,14 @@ export const routes: Routes = [
         path: 'home', 
         component: HomeComponent 
       },
+      {
+        path: 'messages',
+        component: MessagesComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
+      }
     ]
   },
   

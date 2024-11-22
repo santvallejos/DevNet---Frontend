@@ -1,0 +1,57 @@
+/* From Uiverse.io by catraco */ 
+/*------ Settings ------*/
+.container {
+    --color: #a5a5b0;
+    --size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    font-size: var(--size);
+    user-select: none;
+    fill: var(--color);
+  }
+  
+  .container .save-regular {
+    position: absolute;
+    animation: keyframes-fill .5s;
+    transform-origin: top;
+  }
+  
+  .container .save-solid {
+    position: absolute;
+    animation: keyframes-fill .5s;
+    display: none;
+    transform-origin: top;
+  }
+  
+  /* ------ On check event ------ */
+  .container input:checked ~ .save-regular {
+    display: none;
+  }
+  
+  .container input:checked ~ .save-solid {
+    display: block;
+  }
+  
+  /* ------ Hide the default checkbox ------ */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* ------ Animation ------ */
+  @keyframes keyframes-fill {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+  
+    50% {
+      transform: scaleY(1.2);
+    }
+  }

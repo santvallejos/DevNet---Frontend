@@ -23,10 +23,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets/"
-              },
-              "src/favicon.ico"
+                "input": "src/app/assets"
+              }
             ],
             "styles": [
               "node_modules/ngx-toastr/toastr.css",
