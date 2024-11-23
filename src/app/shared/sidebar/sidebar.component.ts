@@ -15,10 +15,7 @@ import { UserSessionInfo } from '../../core/models/user';
 export class SidebarComponent implements OnInit {
   userSession: UserSessionInfo | null = null;
 
-  constructor(
-    private flowbiteService: FlowbiteService,
-    private authService: AuthService
-  ) {}
+  constructor(private flowbiteService: FlowbiteService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadUserSession();
@@ -53,6 +50,10 @@ export class SidebarComponent implements OnInit {
     } else {
       return ''; // Si no hay un username, devuelve un valor vacío o lo que prefieras
     }
+  }
+
+  logOut(){
+    this.authService.logout();
   }
 
 

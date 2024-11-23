@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PostService {
   private apiUrl = `${environment.base_url}/posts`;  // Usar base_url del entorno
 

@@ -13,14 +13,15 @@ import { PublicationComponent } from '../publication/publication.component';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
+  isLoading: boolean = true;
 
   constructor(private flowbiteService: FlowbiteService) {}
 
   //Llamar al servicio
   ngOnInit(): void {
-    this.flowbiteService.loadFlowbite(flowbite => {
-      // Your custom code here
-      console.log('Flowbite loaded', flowbite);
-    });
+    // Simula un proceso de carga (puedes reemplazarlo por cualquier lógica de carga real)
+    setTimeout(() => {
+      this.isLoading = false;  // Oculta el spinner después de 2 segundos
+    }, 2000);  // Simula 2 segundos de carga
   }
 }
