@@ -12,6 +12,10 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class AuthService {
+  getUserRole: any;
+  getUserEmail(): string {
+    throw new Error('Method not implemented.');
+  }
   base_url = environment.base_url;
   currentUser: User = new User();
   currentUserSubject: BehaviorSubject<User>;
@@ -70,6 +74,7 @@ export class AuthService {
         this.router.navigate(['pages/home']);
       },
       error: error => {
+        debugger
         console.log(error);
         if (error.error && error.error.length >= 1) {
           // Aseguramos que error.error esté presente y tiene una longitud mayor o igual a 1

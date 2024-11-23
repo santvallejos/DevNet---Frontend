@@ -23,7 +23,13 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "src/app/assets"
+                "input": "src/assets",
+                "output": "/assets/"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src/assets",
+                "output": "/"
               }
             ],
             "styles": [
@@ -90,7 +96,11 @@
                 "input": "src/assets",
                 "output": "/assets/"
               },
-              "src/favicon.ico"
+              {
+                "glob": "favicon.ico",
+                "input": "src/assets",
+                "output": "/"
+              }
             ],
             "styles": [
               "node_modules/ngx-toastr/toastr.css",

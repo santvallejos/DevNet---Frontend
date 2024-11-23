@@ -1,7 +1,8 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FlowbiteService } from '../../services/flowbite.service';
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 /* Components ux-ui */
-import { SidebarComponent } from '../../core/sidebar/sidebar.component';
+
 
 @Component({
   selector: 'app-messages',

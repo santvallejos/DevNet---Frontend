@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { FlowbiteService } from '../../services/flowbite.service';
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 /* component ux-ui */
-import { SidebarComponent } from '../../core/sidebar/sidebar.component';
-import { PublicationComponent } from '../../core/publication/publication.component';
+
+
+
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [SidebarComponent, PublicationComponent],
+  imports: [SidebarComponent ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })

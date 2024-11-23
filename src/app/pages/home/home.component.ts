@@ -2,15 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FlowbiteService } from '../../services/flowbite.service';
 import { CommonModule } from '@angular/common';
 /* Components ux/ui */
-import { SidebarComponent } from '../../core/sidebar/sidebar.component';
-import { PublicationComponent } from '../../core/publication/publication.component';
-
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
+import { PublicationComponent } from '../publication/publication.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule, SidebarComponent, PublicationComponent],
-  templateUrl: './home.component.html',
+  templateUrl:'./home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{

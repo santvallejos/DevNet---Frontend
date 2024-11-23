@@ -1,0 +1,53 @@
+.container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
+  }
+  
+  textarea {
+    width: 80%;
+    height: 100px;
+  }
+  
+  input {
+    width: 80%;
+    padding: 8px;
+    margin-top: 8px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin-top: 8px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .post-details {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+  }
+  

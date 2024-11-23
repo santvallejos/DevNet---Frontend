@@ -24,3 +24,9 @@ export interface RecoverPasswordResponse {
     message: string;
   }
 
+export interface  UserSessionInfo {
+    username: string;
+    role: string;
+    name?: string;
+  }
+
