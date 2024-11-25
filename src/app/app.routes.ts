@@ -48,20 +48,19 @@ export const routes: Routes = [
       }
     ]
   },
-  
   {
     path: '',
     redirectTo: 'pages/home',
     pathMatch: 'full',
   },
   { 
+    path: 'recover-password', 
+    component: RecoverPasswordComponent 
+  },
+  { 
     path: '**', 
     component: NotFoundComponent 
   },
-  { 
-    path: 'recover-password', 
-    component: RecoverPasswordComponent 
-  }
 ];
 
 @NgModule({

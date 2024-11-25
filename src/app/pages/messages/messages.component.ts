@@ -2,9 +2,7 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { FlowbiteService } from '../../services/flowbite.service';
 import { CommonModule} from '@angular/common';
 import { SignalRService } from '../../services/signal-r.service';
-/* Components ux-ui */
-import { SidebarComponent } from '../../core/sidebar/sidebar.component';
-
+import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-messages',

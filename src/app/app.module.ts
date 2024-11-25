@@ -8,11 +8,15 @@ import { LoginComponent } from './auth/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecoverPasswordComponent } from './auth/recover-password/recover-password.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { AppRoutingModule } from './app.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+
+
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { PublicationComponent} from './pages/publication/publication.component';
 import { SidebarComponent } from './core/sidebar/sidebar.component';
 import { PublicationComponent } from './core/publication/publication.component';
 import { MessagesComponent } from './pages/messages/messages.component';
@@ -27,6 +31,9 @@ import { MessagesComponent } from './pages/messages/messages.component';
     MessagesComponent
     NotFoundComponent,
     ForgotPasswordComponent,
+    SidebarComponent,
+    PublicationComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -36,8 +43,6 @@ import { MessagesComponent } from './pages/messages/messages.component';
     ReactiveFormsModule,
     HttpClientModule, 
     ToastrModule.forRoot(),
-    SidebarComponent,
-    PublicationComponent,
   ],
   bootstrap: [AppComponent]
 })
