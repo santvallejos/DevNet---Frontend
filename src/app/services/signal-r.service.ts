@@ -5,8 +5,10 @@ import * as signalR from '@microsoft/signalr';
   providedIn: 'root'
 })
 export class SignalRService {
+  senderEmail: string = '';
   hubConnection: signalR.HubConnection;
   private hubUrl = 'https://localhost:7224/MessageHub';
+
 
   constructor() {
     this.hubConnection = new signalR.HubConnectionBuilder()
@@ -16,23 +18,39 @@ export class SignalRService {
       })
       .withAutomaticReconnect()
       .build();
-  }
 
-  startConnection(): void {
-    this.hubConnection
-      .start()
-      .then(() => console.log('Connection started'))
+    // Obtiene el email del usuario desde localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      this.senderEmail = userEmail; // Asigna el email al senderEmail
+    } else {
+      console.warn('No user email found in localStorage.');
+    }
+
+    this.hubConnection.start()
+      .then(() => console.log('connection started'))
+      .then(result => {
+        this.hubConnection.invoke('RegisterConnection', userEmail)
+          .then(() => console.log(`Connection registered for ${userEmail}`))
+          .catch(err => console.error('Error registering connection: ', err));
+      })
       .catch(err => console.error('Error starting connection: ', err));
   }
 
-  askServer() {
-    this.hubConnection.invoke("askServer", "hey")
-    .catch(err => console.error(err))
+  stopConnection(): void {
+    this.hubConnection.stop().catch(err => console.error('Error stopping connection: ', err));
   }
 
-  askServerListener(){
-    this.hubConnection.on("askServerResponse", (someText) => {
-      console.log(someText);
-    })
+  sendMessage(userEmail: string, receiverEmail: string, message: string): void {
+    this.hubConnection.invoke('SendMessage', userEmail, receiverEmail, message)
+      .catch(err => console.error('Error sending message: ', err));
+  }
+
+  onReceiveMessage(callback: (sender: string, message: string) => void): void {
+    this.hubConnection.on('ReceiveMessage', callback);
+  }
+
+  onUserOffline(callback: (message: string) => void): void {
+    this.hubConnection.on('UserOffline', callback);
   }
 }

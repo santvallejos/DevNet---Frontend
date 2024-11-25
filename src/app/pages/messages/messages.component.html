@@ -2,5 +2,17 @@
 
 <!-- Content -->
 <div class="lg:ml-64 content">
-
+    <!-- src/app/components/chat/chat.component.html -->
+<div class="chat-container">
+    <h2>Chat</h2>
+    <div class="chat-log">
+      <div *ngFor="let log of chatLog">
+        <strong>{{ log.sender }}:</strong> {{ log.message }}
+      </div>
+    </div>
+    <input [(ngModel)]="receiverEmail" placeholder="Recipient Email" />
+    <textarea [(ngModel)]="message" placeholder="Type your message..."></textarea>
+    <button (click)="sendMessage()">Send</button>
+  </div>
+  
 </div>
