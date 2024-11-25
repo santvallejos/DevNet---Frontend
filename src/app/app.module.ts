@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { SidebarComponent } from './core/sidebar/sidebar.component';
 import { PublicationComponent } from './core/publication/publication.component';
+import { MessagesComponent } from './pages/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PublicationComponent } from './core/publication/publication.component';
     LoginComponent,
     RegisterComponent, 
     RecoverPasswordComponent,
+    MessagesComponent
     NotFoundComponent,
     ForgotPasswordComponent,
   ],
