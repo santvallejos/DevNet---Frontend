@@ -29,10 +29,10 @@ export class SignalRService {
 
     this.hubConnection.start()
       .then(() => console.log('connection started'))
-      .then(result => {
-        this.hubConnection.invoke('RegisterConnection', userEmail)
-          .then(() => console.log(`Connection registered for ${userEmail}`))
-          .catch(err => console.error('Error registering connection: ', err));
+        .then(result => {
+          this.hubConnection.invoke('RegisterConnection', userEmail)
+            .then(() => console.log(`Connection registered for ${userEmail}`))
+              .catch(err => console.error('Error registering connection: ', err));
       })
       .catch(err => console.error('Error starting connection: ', err));
   }

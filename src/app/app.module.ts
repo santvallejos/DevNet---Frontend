@@ -32,7 +32,6 @@ import { MessagesComponent } from './pages/messages/messages.component';
     ForgotPasswordComponent,
     SidebarComponent,
     PublicationComponent,
-  
   ],
   imports: [
     BrowserModule,
