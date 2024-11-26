@@ -18,7 +18,7 @@
                             <div class="-mt-2">
                                 <div class="md rounded-full relative avatar h-36 w-36">
                                     <img class="md rounded-full relative border-4 border-gray-900 h-36 w-36"
-                                        src="https://wallpapers-clan.com/wp-content/uploads/2023/10/minecraft-grass-tree-desktop-wallpaper-preview.jpg"
+                                        [src]="user.profileImageUrl"
                                         alt="" />
                                     <div class="absolute"></div>
                                 </div>
@@ -38,9 +38,9 @@
                         <!-- User basic-->
                         <div>
                             <h2 class="text-xl leading-6 font-bold">
-                                Santiago
+                                {{user.username}}
                             </h2>
-                            <p class="text-sm leading-5 font-medium text-gray-600">hola</p>
+                            <p class="text-sm leading-5 font-medium text-gray-600">{{user.name}} {{user.lastname}}</p>
                         </div>
                         <!-- Description and others -->
                         <div class="mt-3">
@@ -75,16 +75,16 @@
                                             <circle cx="12" cy="17.486" r="1.285"></circle>
                                         </g>
                                     </svg>
-                                    <span class="leading-5 ml-1">Joined December, 2019</span></span>
+                                    <span class="leading-5 ml-1">Joined {{user.createAt}}</span></span>
                             </div>
                         </div>
                         <div class="pt-3 flex justify-start items-start w-full divide-x divide-gray-800 divide-solid">
                             <div class="text-center pr-3">
-                                <span class="font-bold ">520</span><span class="text-gray-600">
+                                <span class="font-bold ">{{user.follows}}</span><span class="text-gray-600">
                                     Following</span>
                             </div>
                             <div class="text-center px-3">
-                                <span class="font-bold ">23,4m </span><span class="text-gray-600">
+                                <span class="font-bold ">{{user.followers}} </span><span class="text-gray-600">
                                     Followers</span>
                             </div>
                         </div>
@@ -92,14 +92,7 @@
                 </div>
                 <hr class="border-gray-800" />
             </div>
-
-            <!-- Publicaciones -->
-            <!-- <ul class="list-none">
-                <app-publication></app-publication>
-                <app-publication></app-publication>
-                <app-publication></app-publication>
-                <app-publication></app-publication>
-            </ul> -->
+                <app-publication [userId]="currentUserId"></app-publication>         
         </section>
     </div>
 </div>

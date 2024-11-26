@@ -28,6 +28,12 @@ export class PostService {
       .pipe(catchError(error => throwError(() => new Error('Error fetching feed.'))));
   }
   
+  getUserPosts(userId : string) : Observable<any[]>{
+    const headers = this.headerInject.injectHeader();
+    return this.http.get<any[]>(`${this.apiUrl}/user/${userId}?userId=${userId}`, {headers})
+      .pipe(catchError(error => throwError(() => new Error('Error fetching user posts.'))));
+  }
+
   // Crear un nuevo post
   createPost(post: { text: string, mediaUrl?: string }): Observable<any> {
     return this.http.post<any>(this.apiUrl, post);

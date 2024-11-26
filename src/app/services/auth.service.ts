@@ -126,4 +126,13 @@ export class AuthService {
       })
     );
   }
+
+  getCurrentUserId(): string {
+    const sessionData = localStorage.getItem('userSession');
+    if (sessionData) {
+      const parsedData = JSON.parse(sessionData);
+      return parsedData.data.userId.toString();
+    }
+    return "";
+  }
 }
