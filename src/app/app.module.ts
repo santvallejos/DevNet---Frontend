@@ -18,6 +18,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { PublicationComponent} from './pages/publication/publication.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,7 @@ import { PublicationComponent} from './pages/publication/publication.component';
     ForgotPasswordComponent,
     SidebarComponent,
     PublicationComponent,
+   
   
   ],
   imports: [
