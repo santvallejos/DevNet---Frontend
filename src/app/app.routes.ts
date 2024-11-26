@@ -11,7 +11,10 @@ import { accessGuard } from './core/guards/access.guard';
 import { MessagesComponent } from './pages/messages/messages.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
+
+
 export const routes: Routes = [
+
   {
     path: 'auth',
     canActivate: [loginGuard],
@@ -48,19 +51,16 @@ export const routes: Routes = [
       }
     ]
   },
-  {
-    path: '',
-    redirectTo: 'pages/home',
-    pathMatch: 'full',
-  },
   { 
     path: 'recover-password', 
     component: RecoverPasswordComponent 
   },
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
   { 
     path: '**', 
     component: NotFoundComponent 
   },
+
 ];
 
 @NgModule({

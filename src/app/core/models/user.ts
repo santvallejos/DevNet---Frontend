@@ -1,6 +1,10 @@
 export class User{
+  id(id: any, updatedData: any) {
+    throw new Error('Method not implemented.');
+  }
   email: string = '';  
   token: string = '';  
+  role: string | null = null; 
 }
 
 export interface LoginRequest {

@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 * {
     margin: 0;
     padding: 0;
@@ -10,5 +12,13 @@
 }
 
 body, html {
+    position: relative;
+    font-family: 'Roboto', sans-serif;
     height: 100%;
 }
+
+app-root:not(:defined) {
+    display: block;
+    height: 100vh;
+    background: white;
+  }

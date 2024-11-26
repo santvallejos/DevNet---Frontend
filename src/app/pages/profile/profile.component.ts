@@ -12,7 +12,7 @@ import { NgFor, NgForOf, NgIf } from '@angular/common';
   standalone: true,
   imports: [SidebarComponent, PublicationComponent, NgIf, NgFor, NgForOf],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   user: any;
