@@ -1,53 +1,132 @@
-.container {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    margin-top: 20px;
+/* Estilo general para el contenedor */
+.feed-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Más espacio entre publicaciones */
+  max-width: 800px;
+  margin: 2rem auto; /* Centrar y dar margen */
+  padding: 1rem;
+}
+
+/* Estilo de cada tarjeta */
+.post-card {
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px; /* Esquinas más redondeadas */
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animación al pasar el cursor */
+}
+
+.post-card:hover {
+  transform: scale(1.02); /* Ligeramente más grande */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra más fuerte */
+}
+
+/* Estilo del encabezado */
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  width: 100%; /* Asegura que el encabezado ocupe todo el espacio */
+}
+
+.user-info {
+  font-size: 0.9rem;
+  color: #333333;
+  display: flex; /* Activa flexbox */
+  align-items: center; /* Alinea verticalmente todos los elementos */
+  justify-content: space-between; /* Espacia los elementos entre sí */
+  width: 100%; /* Asegura que el contenedor tenga el espacio necesario */
+}
+
+.username {
+  font-weight: 600;
+  color: #0077cc; /* Color destacado */
+}
+
+/* Foto de perfil: tamaño adecuado */
+.profile-pic {
+  width: 40px; /* Tamaño adecuado */
+  height: 40px;
+  border-radius: 50%; /* Hacerla redonda */
+  object-fit: cover; /* Ajustar la imagen */
+  margin-right: 1rem; /* Espacio entre la imagen y el nombre de usuario */
+  border: 1px solid #ddd; /* Borde sutil */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.post-date {
+  font-size: 0.8rem;
+  color: #888888;
+  text-align: right;
+  white-space: nowrap;
+  margin-left: auto; /* Empuja la fecha hacia la derecha */
+  overflow: hidden; /* Asegura que el texto no se desborde */
+  text-overflow: ellipsis; /* Añade '...' si el texto es demasiado largo */
+  width: 100%; /* Asegura que la fecha ocupe el espacio necesario */
+}
+
+/* Contenido del post */
+.post-content {
+  margin-bottom: 1.5rem;
+}
+
+.post-text {
+  font-size: 1rem;
+  color: #444444;
+  line-height: 1.5;
+}
+
+.post-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 1rem;
+  display: block;
+  object-fit: cover; /* Ajustar imagen */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Pie de publicación */
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555555;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.footer-item:hover {
+  color: #0077cc;
+  text-decoration: underline;
+}
+
+/* Responsividad */
+@media (min-width: 768px) {
+  .feed-container {
+    max-width: 1000px; /* Ampliar para pantallas más grandes */
   }
-  
-  textarea {
-    width: 80%;
-    height: 100px;
+
+  .post-card {
+    padding: 2rem;
   }
-  
-  input {
-    width: 80%;
-    padding: 8px;
-    margin-top: 8px;
+}
+
+@media (orientation: landscape) {
+  .feed-container {
+    padding: 2rem 4rem; /* Más espacio lateral en landscape */
   }
-  
-  button {
-    padding: 10px 20px;
-    margin-top: 8px;
-    cursor: pointer;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  li {
-    cursor: pointer;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  li:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .post-details {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-  }
-  
+}
+
+
+
+
