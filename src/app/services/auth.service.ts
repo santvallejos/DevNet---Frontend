@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap, map } from 'rxjs';
 import { LoginRequest, RegisterRequest, User } from '../core/models/user';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -7,30 +7,46 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  getUserRole: any;
-  getUserEmail(): string {
+  isAuthenticated(): boolean {
     throw new Error('Method not implemented.');
   }
-  base_url = environment.base_url;
-  currentUser: User = new User();
-  currentUserSubject: BehaviorSubject<User>;
+  private base_url = environment.base_url;
+  private currentUser: User = new User();
+  private currentUserSubject: BehaviorSubject<User>;
+  private authStateInitialized = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private router: Router,  @Inject(PLATFORM_ID) private platformId: Object, private toastr: ToastrService ) {
-    if (isPlatformBrowser(this.platformId)) {
-      const storedEmail = localStorage.getItem('userEmail');
-      this.currentUser.email = storedEmail ? storedEmail : '';
-    } else {
-      this.currentUser.email = '';
-    }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private toastr: ToastrService
+  ) {
     this.currentUserSubject = new BehaviorSubject<User>(this.currentUser);
+    this.initializeAuthState();
   }
 
-  // Métodos auxiliares para manejo de localStorage
+  private initializeAuthState(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const userSession = this.getItem('userSession');
+      const userEmail = this.getItem('userEmail');
+      
+      if (userSession) {
+        this.currentUser.email = userEmail || '';
+        this.currentUserSubject.next(this.currentUser);
+      }
+    }
+    this.authStateInitialized.next(true);
+  }
+
+  // Método para esperar a que se inicialice el estado de autenticación
+  waitForAuthInit(): Observable<boolean> {
+    return this.authStateInitialized.asObservable();
+  }
+
   private setItem(key: string, value: string): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(key, value);
@@ -50,52 +66,50 @@ export class AuthService {
     }
   }
 
-  // Métodos principales
-  login(loginForm: LoginRequest){
-    return this.http.post(`${this.base_url}/Auth/login`, loginForm)
-    .pipe(
-      map((response: any)=>{
-        localStorage.setItem('userSession', JSON.stringify(response))
-        localStorage.setItem('userEmail', loginForm.username);
-        localStorage.setItem('userRole', response.data.role);
+  login(loginForm: LoginRequest) {
+    return this.http.post(`${this.base_url}/Auth/login`, loginForm).pipe(
+      map((response: any) => {
+        this.setItem('userSession', JSON.stringify(response));
+        this.setItem('userEmail', loginForm.username);
+        this.setItem('userRole', response.data.role);
+        this.currentUser.email = loginForm.username;
+        this.currentUserSubject.next(this.currentUser);
         return response;
       })
     );
   }
 
-
   register(registerData: RegisterRequest) {
-    return this.http.post(`${this.base_url}/Auth/register`, registerData).subscribe({
-      next: response => {
-        // Almacenamos la respuesta y el email en localStorage
-        localStorage.setItem('userSession', JSON.stringify(response));
-        localStorage.setItem('userEmail', registerData.username);
-        // Redirigimos a la página de inicio
-        this.router.navigate(['pages/home']);
-      },
-      error: error => {
-        debugger
-        console.log(error);
-        if (error.error && error.error.length >= 1) {
-          // Aseguramos que error.error esté presente y tiene una longitud mayor o igual a 1
-          error.error.forEach((errorMsg: { description: string }) => {
-            this.toastr.error(errorMsg.description); // Mostrar mensaje de error
-          });
-        } else {
-          // Manejo de error general si no tiene el formato esperado
-          this.toastr.error('Ocurrió un error inesperado.');
+    return this.http.post(`${this.base_url}/Auth/register`, registerData).pipe(
+      tap({
+        next: (response: any) => {
+          this.setItem('userSession', JSON.stringify(response));
+          this.setItem('userEmail', registerData.username);
+          this.currentUser.email = registerData.username;
+          this.currentUserSubject.next(this.currentUser);
+          this.router.navigate(['pages/home']);
+        },
+        error: (error) => {
+          if (error.error?.length >= 1) {
+            error.error.forEach((errorMsg: { description: string }) => {
+              this.toastr.error(errorMsg.description);
+            });
+          } else {
+            this.toastr.error('Ocurrió un error inesperado.');
+          }
         }
-      }
-    });
+      })
+    );
   }
-  
 
   isLogged(): boolean {
-    return this.getItem('userSession') !== null;
+    return isPlatformBrowser(this.platformId) ? !!this.getItem('userSession') : false;
   }
 
   logout(): void {
     this.clearStorage();
+    this.currentUser = new User();
+    this.currentUserSubject.next(this.currentUser);
     this.router.navigate(['auth/login']);
   }
 
@@ -125,5 +139,14 @@ export class AuthService {
         }
       })
     );
+  }
+
+  getCurrentUserId(): string {
+    const sessionData = localStorage.getItem('userSession');
+    if (sessionData) {
+      const parsedData = JSON.parse(sessionData);
+      return parsedData.data.userId.toString();
+    }
+    return "";
   }
 }

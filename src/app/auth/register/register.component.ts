@@ -1,111 +1,105 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { RegisterRequest } from '../../core/models/user';
 
-
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl:'./register.component.html',
+  templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  form: FormGroup; // Variable que almacenará el formulario reactivo.
-  showPassword = false; // Variable para controlar la visibilidad de la contraseña.
-  selectedFile: any; // Variable para almacenar la imagen seleccionada.
+  form: FormGroup;
+  showPassword = false;
+  selectedFile: any;
 
-  constructor(private fb: FormBuilder, private route: Router, private authService: AuthService) {
-    // Inicializa el formulario con validaciones en el constructor.
+  constructor(
+    private fb: FormBuilder,
+    private route: Router,
+    private authService: AuthService
+  ) {
     this.form = this.fb.group({
-      firstName: ['', Validators.required], // Primer nombre, obligatorio.
-      lastName: ['', Validators.required], // Apellido, obligatorio.
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       username: [{ value: '', disabled: true }, Validators.required],
-      email: ['', [Validators.required, Validators.email]], // Correo electrónico con validación de formato.
-      password: ['', [Validators.required, Validators.minLength(6)]], // Contraseña, con validación de mínimo de 6 caracteres.
-      profilePicture: [null], // Almacenará la foto de perfil.
-     // dateOfBirth: ['', Validators.required] // Fecha de nacimiento, obligatorio.
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      profilePicture: [null],
     });
+
+    // Actualizar username cuando cambien los campos de nombre o apellido
+    this.form.get('firstName')?.valueChanges.subscribe(() => this.updateUsername());
+    this.form.get('lastName')?.valueChanges.subscribe(() => this.updateUsername());
   }
 
-  /**
-   * Método para alternar la visibilidad de la contraseña en el formulario.
-   */
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  /**
-   * Método que se ejecuta cuando se selecciona un archivo de imagen (profilePicture).
-   * Valida el tipo de archivo y, si es válido, lo carga como una imagen base64.
-   * 
-   * @param event Evento de selección de archivo.
-   */
   onFileSelected(event: any) {
-    const file = event.target.files[0]; // Obtener el archivo seleccionado.
+    const file = event.target.files[0];
     if (file) {
       const fileType = file.type;
-      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif']; // Tipos permitidos.
-  
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif'];
+
       if (allowedTypes.includes(fileType)) {
-        const reader = new FileReader(); // Crear un lector de archivos.
+        const reader = new FileReader();
         reader.onload = (e: ProgressEvent<FileReader>) => {
-          this.selectedFile = e.target?.result as string;
-          
-          // Asegurarse de que el valor tenga el formato correcto
-          const fileExtension = fileType.split('/')[1]; // 'png', 'jpeg', etc.
-          this.selectedFile = `data:image/${fileExtension};base64,` + this.selectedFile.split(',')[1]; // Agregar el prefijo correcto
-          
-          this.form.get('profilePicture')?.setValue(this.selectedFile); // Asignar la imagen al formulario
+          const base64 = e.target?.result as string;
+          const fileExtension = fileType.split('/')[1];
+          this.selectedFile = `data:image/${fileExtension};base64,${base64.split(',')[1]}`;
+          this.form.get('profilePicture')?.setValue(this.selectedFile);
         };
-        reader.readAsDataURL(file); // Leer el archivo como URL de datos
+        reader.readAsDataURL(file);
       } else {
         alert('Solo se permiten imágenes en formato PNG, JPEG, JPG, WebP y GIF');
       }
     }
   }
-  
-  
 
   updateUsername() {
     const firstName = this.form.get('firstName')?.value;
     const lastName = this.form.get('lastName')?.value;
-
     if (firstName && lastName) {
-      // Genera el nombre de usuario combinando el primer nombre y apellido.
-      this.form.get('username')?.setValue(`${firstName.toLowerCase()}.${lastName.toLowerCase()}`, { emitEvent: false });
+      this.form
+        .get('username')
+        ?.setValue(`${firstName.toLowerCase()}.${lastName.toLowerCase()}`, { emitEvent: false });
     }
   }
 
-
-  /**
-   * Método que maneja el envío del formulario de registro.
-   * Valida que el formulario esté correcto y luego prepara los datos para enviarlos.
-   */
-  registerUser() {  
-      // Crear el objeto userToRegister con los valores del formulario.
-      const userToRegister: RegisterRequest = {
-        name: this.form.get('firstName')?.value,
-        lastName: this.form.get('lastName')?.value,
-        username: this.form.get('username')?.value, 
-        email: this.form.get('email')?.value,
-        password: this.form.get('password')?.value,
-        profileImageUrl: this.form.get('profilePicture')?.value, // Si se seleccionó una foto, la añade. Si no, es null.
-       // dateOfBirth: this.form.get('dateOfBirth')?.value
-      };
-      console.log(this.selectedFile); // Verifica si la imagen está en formato base64
-      return this.authService.register(userToRegister);
+  registerUser() {
+    if (this.form.invalid) {
+      console.error('El formulario no es válido:', this.form.errors);
+      return;
     }
-  
-  
 
-  /**
-   * Método para redirigir al usuario a la página de inicio de sesión.
-   */
+    const userToRegister: RegisterRequest = {
+      name: this.form.get('firstName')?.value,
+      lastName: this.form.get('lastName')?.value,
+      username: this.form.get('username')?.value,
+      email: this.form.get('email')?.value,
+      password: this.form.get('password')?.value,
+      profileImageUrl: this.form.get('profilePicture')?.value || null,
+    };
+
+    console.log('Datos del usuario a registrar:', userToRegister);
+
+    this.authService.register(userToRegister).subscribe({
+      next: (response) => {
+        console.log('Usuario registrado con éxito:', response);
+        this.goToLogin();
+      },
+      error: (err) => {
+        console.error('Error al registrar el usuario:', err);
+      },
+    });
+  }
+
   goToLogin() {
-    this.route.navigate(['auth/login']); // Navegar a la ruta de inicio de sesión.
+    this.route.navigate(['auth/login']);
   }
 }

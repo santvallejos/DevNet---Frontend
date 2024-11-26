@@ -1,14 +1,26 @@
-<div class="publication">
-  <!-- <h3>Publicaciones</h3>
-  <ul>
-    <div *ngFor="let post of posts">
-      <div class="post">
-        <p>{{ post.text }}</p>
-        <img *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Imagen asociada al post" />
+<div class="feed-container">
+  <div class="post-card" *ngFor="let post of posts">
+    <div class="post-header">
+      <div class="user-info">
+        <img *ngIf="post.profileImageUrl" [src]="post.profileImageUrl" alt="User profile" class="profile-pic" />
+        <span class="username">{{ post.username }}</span>
+        <span class="post-date">{{ post.createdAt}}</span>
       </div>
     </div>
-  </ul> -->
+
+    <div class="post-content">
+      <p class="post-text">{{ post.text }}</p>
+      <img *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Post image" class="post-image" />
+    </div>
+
+    <div class="post-footer">
+      <div class="likes">
+        ❤️ {{ post.likes }} likes
+      </div>
+      <div class="comments">
+        💬 {{ post.commentaries }} comments
+      </div>
+    </div>
+  </div>
 </div>
-
-
 
