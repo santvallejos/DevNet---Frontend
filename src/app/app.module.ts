@@ -17,6 +17,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { PublicationComponent} from './pages/publication/publication.component';
+import { PublicationComponent } from './core/publication/publication.component';
+import { MessagesComponent } from './pages/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { PublicationComponent} from './pages/publication/publication.component';
     LoginComponent,
     RegisterComponent, 
     RecoverPasswordComponent,
+    MessagesComponent
     NotFoundComponent,
     ForgotPasswordComponent,
     SidebarComponent,
@@ -33,6 +36,7 @@ import { PublicationComponent} from './pages/publication/publication.component';
   ],
   imports: [
     BrowserModule,
+    SidebarComponent,
     BrowserAnimationsModule, 
     AppRoutingModule,
     FormsModule,
