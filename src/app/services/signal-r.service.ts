@@ -5,12 +5,15 @@ import * as signalR from '@microsoft/signalr';
   providedIn: 'root'
 })
 export class SignalRService {
+  //correo del usuario
   senderEmail: string = '';
   hubConnection: signalR.HubConnection;
-  private hubUrl = 'https://localhost:7224/MessageHub';
-
+  private hubUrl = 'https://localhost:7224/MessageHub'; //Url de Hub
+  //Lista de usuarios conectados
+  connectedUsers: string[] = [];
 
   constructor() {
+    //Declara donde conectarse
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(this.hubUrl, {
         skipNegotiation: true,
@@ -27,6 +30,7 @@ export class SignalRService {
       console.warn('No user email found in localStorage.');
     }
 
+    //Inicia la conexion
     this.hubConnection.start()
       .then(() => console.log('connection started'))
         .then(result => {
@@ -35,22 +39,40 @@ export class SignalRService {
               .catch(err => console.error('Error registering connection: ', err));
       })
       .catch(err => console.error('Error starting connection: ', err));
+
+      this.addListeners();
   }
 
+  //Detener la conexion
   stopConnection(): void {
     this.hubConnection.stop().catch(err => console.error('Error stopping connection: ', err));
   }
 
+  //Función principal de mandar un mensaje
   sendMessage(userEmail: string, receiverEmail: string, message: string): void {
     this.hubConnection.invoke('SendMessage', userEmail, receiverEmail, message)
       .catch(err => console.error('Error sending message: ', err));
   }
 
+  //Escuchar los mensajes entrantes
   onReceiveMessage(callback: (sender: string, message: string) => void): void {
     this.hubConnection.on('ReceiveMessage', callback);
   }
 
+  //Notificar que un usuario se desconecto
   onUserOffline(callback: (message: string) => void): void {
     this.hubConnection.on('UserOffline', callback);
+  }
+
+  //Actualizar la lista de usuarios conectados
+  private addListeners() {
+    this.hubConnection.on('UpdateUserList', (users: string[]) => {
+      this.connectedUsers = users;
+    });
+  }
+
+  //Enviar la lista a los componentes
+  getUsers(): string[] {
+    return this.connectedUsers;
   }
 }
