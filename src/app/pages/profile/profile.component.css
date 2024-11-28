@@ -1,0 +1,127 @@
+/* Contenedor principal del perfil */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f7fa; /* Fondo gris claro */
+    height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+    overflow: hidden; /* Evita que el scroll se aplique a toda la página */
+  }
+  
+  /* Área principal de contenido del perfil */
+  .main-profile-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    margin: 20px; /* Espaciado interno */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    overflow: hidden; /* Evita que los elementos desborden */
+    position: relative;
+  }
+  
+  /* Contenedor de la imagen de perfil */
+  .profile-picture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4a90e2; /* Borde azul alrededor de la imagen */
+  }
+  
+  /* Sección de información del usuario */
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .user-info .username {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .user-info .name {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .user-info .followers, .user-info .follows {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  /* Contenedor para los botones de acción (como editar, seguir) */
+  .profile-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  /* Botones de acción del perfil */
+  .profile-actions button {
+    background-color: #4a90e2; /* Fondo azul */
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .profile-actions button:hover {
+    background-color: #357abd; /* Azul más oscuro al pasar el mouse */
+  }
+  
+  /* Sección de mensajes (si se desea agregar interacción) */
+  .chat-container {
+    flex: 1;
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #f9f9f9; /* Fondo gris claro */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow-y: auto; /* Habilita el scroll solo si hay muchos mensajes */
+    max-height: calc(100vh - 180px); /* Limita la altura del chat para que no ocupe toda la pantalla */
+  }
+  
+  /* Input de mensajes: siempre abajo */
+  .message-input-area {
+    background: #e3e8ee; /* Fondo gris claro */
+    border-top: 1px solid #ddd; /* Línea superior */
+    padding: 10px;
+    position: sticky; /* Fija la posición en la parte inferior */
+    bottom: 0;
+    z-index: 10;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+  
+  /* Botón de envío */
+  .message-input-area button {
+    background-color: #4a90e2; /* Fondo azul */
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .message-input-area button:hover {
+    background-color: #357abd; /* Azul más oscuro al pasar el mouse */
+  }
+  

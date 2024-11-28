@@ -1,93 +1,74 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FlowbiteService } from '../../services/flowbite.service';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SignalRService } from '../../services/signal-r.service';
 import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
-import { UserSessionInfo } from '../../core/models/user';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-messages',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent],
+  imports: [FormsModule, CommonModule, SidebarComponent],
   templateUrl: './messages.component.html',
-  styleUrl: './messages.component.css'
+  styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit, OnDestroy {
-  userSession: UserSessionInfo | null = null;
-  senderEmail: string = ''; // Cambia según el usuario actual
+  senderEmail: string = '';
   receiverEmail = '';
   message = '';
   chatLog: { sender: string; message: string }[] = [];
+  isCollapsed = false;
+  sidebarCollapsed: boolean = false;
 
-  constructor(private flowbiteService: FlowbiteService,private messageHubService: SignalRService, private authService: AuthService) {
-    // Obtiene el email del usuario desde localStorage
+  constructor(
+    private messageHubService: SignalRService,
+    private authService: AuthService
+  ) {
     const userEmail = localStorage.getItem('userEmail');
     if (userEmail) {
-      this.senderEmail = userEmail; // Asigna el email al senderEmail
-    } else {
-      console.warn('No user email found in localStorage.');
+      this.senderEmail = userEmail;
     }
   }
 
   ngOnInit(): void {
-    this.flowbiteService.loadFlowbite(flowbite => {
-      console.log('Flowbite loaded', flowbite);
-    });
-
-    this.loadUserSession();
-
+    // Establecer conexión con el servidor SignalR
     this.messageHubService.onReceiveMessage((sender, message) => {
       this.chatLog.push({ sender, message });
     });
 
-    this.messageHubService.onUserOffline(message => {
-      alert(message);
-    });
+    // Cargar mensajes iniciales desde la base de datos
+    this.loadChatHistory();
   }
 
-  private loadUserSession() {
-    const sessionData = localStorage.getItem('userSession');
-    if (sessionData) {
-      const parsedData = JSON.parse(sessionData);
-      this.userSession = {
-        username: localStorage.getItem('userEmail') || '',
-        role: localStorage.getItem('userRole') || '',
-        // Si hay más datos en la respuesta del servidor, puedes agregarlos aquí
-        name: parsedData.data?.name
-      };
+  sendMessage(): void {
+    if (this.receiverEmail && this.message) {
+      this.messageHubService.sendMessage(
+        this.senderEmail,
+        this.receiverEmail,
+        this.message
+      );
+
+      this.chatLog.push({ sender: this.senderEmail, message: this.message });
+      this.message = '';
     }
-  }
-
-  getUserInitials(): string {
-    const username = this.userSession?.username;
-  
-    // Verifica si username está definido y tiene un valor válido
-    if (username) {
-      return username
-        .split('@')[0] // Toma solo la parte antes del @
-        .substring(0, 2) // Toma los primeros dos caracteres
-        .toUpperCase(); // Convierte a mayúsculas
-    } else {
-      return ''; // Si no hay un username, devuelve un valor vacío o lo que prefieras
-    }
-  }
-
-  logOut(){
-    this.authService.logout();
   }
 
   ngOnDestroy(): void {
     this.messageHubService.stopConnection();
   }
 
-  sendMessage(): void {
-    if (this.receiverEmail && this.message) {
-      this.messageHubService.sendMessage(this.senderEmail, this.receiverEmail, this.message);
-      this.chatLog.push({ sender: this.senderEmail, message: this.message });
-      this.message = '';
-    }
+  onSidebarStateChange(isCollapsed: boolean): void {
+    this.sidebarCollapsed = isCollapsed;
+  }
+
+  private loadChatHistory(): void {
+    this.messageHubService.getChatHistory(this.senderEmail, this.receiverEmail).subscribe({
+      next: (messages) => {
+        this.chatLog = messages;
+      },
+      error: (err) => {
+        console.error('Error loading chat history:', err);
+      },
+    });
   }
 }

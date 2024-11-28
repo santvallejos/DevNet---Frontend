@@ -46,7 +46,7 @@ export const routes: Routes = [
         component: MessagesComponent
       },
       {
-        path: 'profile/:userid',
+        path: 'profile/:id',
         component: ProfileComponent
       }
     ]

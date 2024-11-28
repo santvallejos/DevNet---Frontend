@@ -1,22 +1,13 @@
-  <div class="main-container">
-    <app-sidebar></app-sidebar>
+<app-sidebar 
+  (sidebarStateChange)="onSidebarStateChange($event)">
+</app-sidebar>
 
-    <!-- Spinner que se muestra mientras la página está cargando -->
-    <div *ngIf="isLoading" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-      <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full border-t-transparent border-blue-600" role="status">
-      </div>
-    </div>
-  
-   
-    <div class="content">
-      <div class="lg:ml-64 contentHome">
-        <div class="flex justify-center">
-          <section class="publicationsHome">
-            <ul class="list-none border-l border-r border-t border-black">
-              <app-publication [userId]="'feed'"></app-publication> <!-- El selector debe coincidir -->
-            </ul>
-          </section>
-        </div>
-      </div>
-    </div>
-  </div>
+<div 
+  class="home-container" 
+  [ngClass]="{
+    'sidebar-collapsed': sidebarCollapsed, 
+    'sidebar-expanded': !sidebarCollapsed
+  }">
+  <h1>Bienvenido a la aplicación</h1>
+  <p>Este es el área principal de la aplicación.</p>
+</div>

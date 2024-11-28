@@ -1,43 +1,31 @@
-/* sidebar.component.css */
-.sidebar-transition {
-  transition: width 0.3s ease-in-out;
+.sidebar-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden; 
+  width: 100%;
+ }
+
+.sidebar {
+  width: 250px;  
+
+  background-color: #2d3748;
+  color: white;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
 }
 
-/* Ajusta el contenido principal cuando el sidebar cambia */
-:host {
-  display: block;
+.sidebar.collapsed {
+  width: 80px;  
 }
 
-aside {
-  transition: all 0.3s ease-in-out;
+.main-content {
+  flex-grow: 1;
+  margin-left: 250px; 
+ 
 }
 
-/* Ajustes para modo oscuro */
-@media (prefers-color-scheme: dark) {
-  aside {
-    background-color: rgb(31, 41, 55);
-  }
-}
-
-img {
-  width: 40px; /* Ajusta esto según el tamaño predeterminado que desees */
-  height: 40px;
-}
-
-img.ng-lazyloaded {
-  width: auto;
-  height: auto;
-}
-/* Estilo cuando el sidebar está colapsado */
-.sidebar-collapsed img {
-  height: 2rem; /* Ajusta el tamaño de la imagen cuando el sidebar está colapsado */
-}
-
-/* Estilo cuando el sidebar no está colapsado */
-.sidebar-expanded img {
-  height: 2.5rem; /* Ajusta el tamaño de la imagen cuando el sidebar está expandido */
-}
-
-a {
-  cursor: pointer;
+.main-content.sidebar-collapsed {
+  margin-left: 80px; 
 }

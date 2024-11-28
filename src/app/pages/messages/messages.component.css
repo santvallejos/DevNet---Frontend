@@ -1,29 +1,75 @@
-@media (max-width: 1024px)
-{
-    .content{
-        padding-top: 3rem;
-    }
+/* Estilo general del contenedor principal */
+.home-container {
+  display: flex;
+  
+  background-color: #f5f7fa; /* Fondo gris claro */
+  height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+  overflow: hidden; /* Evita que el scroll se aplique a toda la página */
 }
 
-/* src/app/components/chat/chat.component.css */
+/* Cuando el sidebar está colapsado */
+.home-container.sidebar-collapsed {
+  margin-left: 80px; /* Ajusta según el ancho del sidebar colapsado */
+  width: calc(100% - 80px);
+}
+
+/* Cuando el sidebar está expandido */
+.home-container.sidebar-expanded {
+  margin-left: 250px; /* Ajusta según el ancho del sidebar expandido */
+  width: calc(100% - 250px);
+}
+
+/* Área principal del contenido */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #ffffff; /* Fondo blanco */
+  border-radius: 8px; /* Bordes redondeados */
+  margin: 20px; /* Espaciado interno */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  overflow: hidden; /* Evita que los elementos desborden */
+  position: relative;
+}
+
+/* Chat Container: Área donde aparecen los mensajes */
 .chat-container {
-    width: 300px;
-    margin: auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  .chat-log {
-    max-height: 200px;
-    overflow-y: auto;
-    margin-bottom: 10px;
-  }
-  textarea {
-    width: 100%;
-    height: 60px;
-  }
-  input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  
+  flex: 1;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #f9f9f9; /* Fondo gris claro */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow-y: auto; /* Habilita el scroll solo si hay muchos mensajes */
+  max-height: calc(100vh - 180px); /* Limita la altura del chat para que no ocupe toda la pantalla */
+}
+
+/* Input de mensajes: siempre abajo */
+.message-input-area {
+  background: #e3e8ee; /* Fondo gris claro */
+  border-top: 1px solid #ddd; /* Línea superior */
+  padding: 10px;
+  position: sticky; /* Fija la posición en la parte inferior */
+  bottom: 0;
+  z-index: 10;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Botón de envío */
+button {
+  background-color: #4a90e2; /* Fondo azul */
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #357abd; /* Azul más oscuro al pasar el mouse */
+}

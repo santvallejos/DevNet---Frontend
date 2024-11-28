@@ -11,9 +11,6 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class AuthService {
-  isAuthenticated(): boolean {
-    throw new Error('Method not implemented.');
-  }
   private base_url = environment.base_url;
   private currentUser: User = new User();
   private currentUserSubject: BehaviorSubject<User>;
@@ -65,19 +62,30 @@ export class AuthService {
       localStorage.clear();
     }
   }
-
   login(loginForm: LoginRequest) {
     return this.http.post(`${this.base_url}/Auth/login`, loginForm).pipe(
       map((response: any) => {
-        this.setItem('userSession', JSON.stringify(response));
-        this.setItem('userEmail', loginForm.username);
-        this.setItem('userRole', response.data.role);
-        this.currentUser.email = loginForm.username;
-        this.currentUserSubject.next(this.currentUser);
-        return response;
+        console.log('Login response:', response);  // Verifica la respuesta
+        if (response.success && response.data) {
+          this.setItem('userSession', JSON.stringify(response));  // Almacena la sesión
+          this.setItem('userEmail', loginForm.username);  // Almacena el email
+          this.setItem('userRole', response.data.role);  // Almacena el rol
+          this.setItem('userId', response.data.userId);  // Almacena el userId
+          this.setItem('profilePicture', response.data.profilePicture);  // Almacena la foto de perfil
+          this.currentUser.email = loginForm.username;
+          this.currentUserSubject.next(this.currentUser);
+          return response;
+        } else {
+          // Maneja el caso de respuesta no exitosa
+          return null;
+        }
       })
     );
   }
+  
+  
+  
+  
 
   register(registerData: RegisterRequest) {
     return this.http.post(`${this.base_url}/Auth/register`, registerData).pipe(
@@ -104,6 +112,10 @@ export class AuthService {
 
   isLogged(): boolean {
     return isPlatformBrowser(this.platformId) ? !!this.getItem('userSession') : false;
+  }
+
+  isAuthenticated(): boolean {
+    return this.isLogged();  // Usa el método isLogged que ya verifica la existencia de 'userSession'
   }
 
   logout(): void {
@@ -144,9 +156,26 @@ export class AuthService {
   getCurrentUserId(): string {
     const sessionData = localStorage.getItem('userSession');
     if (sessionData) {
-      const parsedData = JSON.parse(sessionData);
-      return parsedData.data.userId.toString();
+      try {
+        const parsedData = JSON.parse(sessionData);
+        console.log('Parsed session data:', parsedData);  // Verifica la estructura de la sesión
+        // Ajusta la extracción de userId dependiendo de la respuesta
+        return parsedData?.data?.userId ? parsedData.data.userId.toString() : ''; // Asegúrate de que data.userId esté disponible
+      } catch (error) {
+        console.error('Error al parsear userSession:', error);
+        return '';  // Retorna una cadena vacía si hubo un error al parsear
+      }
     }
-    return "";
+    return '';  // Retorna una cadena vacía si no hay sesión activa
   }
+  
+  // Método que retorna la URL de la foto de perfil del usuario
+  getProfilePicture(): string {
+    // Aquí deberías devolver la URL de la imagen del perfil
+    // Esto puede venir de un servicio backend o almacenarse en el localStorage
+    return localStorage.getItem('profilePicture') || 'https://default-avatar.com/default.jpg';
+  }
+  
+  
+
 }

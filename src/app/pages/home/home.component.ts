@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy{
   isLoading: boolean = true;
   isCollapsed = false;
+  sidebarCollapsed: boolean = false;
   private sidebarSubscription?: Subscription;
   sidebarService: any;
 
@@ -29,12 +30,19 @@ export class HomeComponent implements OnInit, OnDestroy{
 
   //Llamar al servicio
   ngOnInit(): void {
-    // Simula un proceso de carga (puedes reemplazarlo por cualquier lógica de carga real)
+    // Recuperar el estado del sidebar desde localStorage
+    const storedState = localStorage.getItem('sidebarCollapsed');
+    this.sidebarCollapsed = storedState ? JSON.parse(storedState) : false;
+  
+    // Simula el spinner de carga
     setTimeout(() => {
-      this.isLoading = false;  // Oculta el spinner después de 2 segundos
-    }, 2000);  // Simula 2 segundos de carga
-    this.sidebarSubscription = this.sidebarService.isCollapsed$.subscribe(
-      (      collapsed: boolean) => this.isCollapsed = collapsed
-    );
+      this.isLoading = false; 
+    }, 2000);
   }
+  
+  onSidebarStateChange(isCollapsed: boolean): void {
+    this.sidebarCollapsed = isCollapsed;
+    localStorage.setItem('sidebarCollapsed', JSON.stringify(isCollapsed)); // Guardar estado
+  }
+  
 }

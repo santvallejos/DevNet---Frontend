@@ -13,14 +13,11 @@ import { AppRoutingModule } from './app.routes';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
-
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { NotFoundComponent } from './shared/not-found/not-found.component';
-import { PublicationComponent} from './pages/publication/publication.component';
-import { PublicationComponent } from './core/publication/publication.component';
 import { MessagesComponent } from './pages/messages/messages.component';
-
-
+import { PublicationComponent } from './pages/publication/publication.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -29,22 +26,23 @@ import { MessagesComponent } from './pages/messages/messages.component';
     LoginComponent,
     RegisterComponent, 
     RecoverPasswordComponent,
-    MessagesComponent
+    MessagesComponent, 
     NotFoundComponent,
     ForgotPasswordComponent,
-    SidebarComponent,
     PublicationComponent,
+    SidebarComponent, // Remove duplicate import from imports
   ],
   imports: [
     BrowserModule,
-    SidebarComponent,
     BrowserAnimationsModule, 
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule, 
     ToastrModule.forRoot(),
+    RouterModule,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [SidebarComponent]
 })
 export class AppModule { }

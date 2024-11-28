@@ -1,15 +1,41 @@
-@media (min-width: 1024px)
-{
-    .publicationsHome{
-        width: 60%;
-        overflow: auto;
-        overflow-wrap: break-word;
-    }
+/* Estilos para el contenedor principal (home) */
+.home-container {
+  background-color: lightblue; 
+  padding: 20px;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
 }
 
-@media (max-width: 1024px)
-{
-    .contentHome{
-        padding-top: 3rem;
-    }
+/* Cuando el sidebar está contraído */
+ .sidebar-collapsed {
+  margin-left: 80px; 
+  width: calc(100% - 60px); 
+} 
+
+/* Cuando el sidebar está extendido */
+.sidebar-expanded {
+  margin-left: 250px; 
+  width: calc(100% - 250px); 
+} 
+
+/* Estilos para el sidebar */
+app-sidebar {
+  color: white;
+ 
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 250px; 
 }
+
+/* Sidebar contraído */
+app-sidebar.collapsed {
+  width: 80px;
+}
+
+
+
