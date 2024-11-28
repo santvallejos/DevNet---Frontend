@@ -37,6 +37,7 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule, 
     AppRoutingModule,
     FormsModule,
+    SidebarComponent,
     ReactiveFormsModule,
     HttpClientModule, 
     ToastrModule.forRoot(),
