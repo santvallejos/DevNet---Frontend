@@ -16,12 +16,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   private authStateInitialized = new BehaviorSubject<boolean>(false);
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private toastr: ToastrService
-  ) {
+  constructor(private http: HttpClient, private router: Router, @Inject(PLATFORM_ID) private platformId: Object, private toastr: ToastrService) {
     this.currentUserSubject = new BehaviorSubject<User>(this.currentUser);
     this.initializeAuthState();
   }

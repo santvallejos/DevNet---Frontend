@@ -2,12 +2,7 @@
   (sidebarStateChange)="onSidebarStateChange($event)">
 </app-sidebar>
 
-<div 
-  class="home-container" 
-  [ngClass]="{
-    'sidebar-collapsed': sidebarCollapsed, 
-    'sidebar-expanded': !sidebarCollapsed
-  }">
+<div class="home-container" [ngClass]="{ 'sidebar-collapsed': sidebarCollapsed,  'sidebar-expanded': !sidebarCollapsed }">
   <h1>Bienvenido a la aplicación</h1>
   <p>Este es el área principal de la aplicación.</p>
 </div>

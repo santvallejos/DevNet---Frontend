@@ -78,7 +78,7 @@ export class SidebarComponent implements OnInit {
        localStorage.removeItem('userSession');
        localStorage.removeItem('userEmail');
        localStorage.removeItem('userRole');
-       this.router.navigate(['/login']);
+       this.router.navigate(['auth/login']);
      }
    }
 
@@ -97,5 +97,9 @@ export class SidebarComponent implements OnInit {
      } else {
        this.toastr.error('No se pudo encontrar el usuario.');
      }
+   }
+
+   post(){
+    this.router.navigate(['pages/post']);
    }
 }

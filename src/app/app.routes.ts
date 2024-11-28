@@ -10,6 +10,7 @@ import { loginGuard } from './core/guards/login.guard';
 import { accessGuard } from './core/guards/access.guard';
 import { MessagesComponent } from './pages/messages/messages.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { CreatePostComponent } from './pages/create-post/create-post.component';
 
 
 
@@ -40,6 +41,10 @@ export const routes: Routes = [
       { 
         path: 'home', 
         component: HomeComponent 
+      },
+      {
+        path: 'post', 
+        component: CreatePostComponent, 
       },
       {
         path: 'messages',

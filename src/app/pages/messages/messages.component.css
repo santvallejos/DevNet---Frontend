@@ -1,7 +1,7 @@
 /* Estilo general del contenedor principal */
 .home-container {
   display: flex;
-  
+  flex-direction: column;
   background-color: #f5f7fa; /* Fondo gris claro */
   height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
   overflow: hidden; /* Evita que el scroll se aplique a toda la página */

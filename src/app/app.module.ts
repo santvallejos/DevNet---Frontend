@@ -18,6 +18,8 @@ import { MessagesComponent } from './pages/messages/messages.component';
 import { PublicationComponent } from './pages/publication/publication.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
+import { CreatePostComponent } from './pages/create-post/create-post.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { RouterModule } from '@angular/router';
     NotFoundComponent,
     ForgotPasswordComponent,
     PublicationComponent,
-    SidebarComponent, // Remove duplicate import from imports
+    SidebarComponent, 
+    
+    CreatePostComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,7 @@ import { RouterModule } from '@angular/router';
     HttpClientModule, 
     ToastrModule.forRoot(),
     RouterModule,
+    CKEditorModule,
   ],
   bootstrap: [AppComponent],
   exports: [SidebarComponent]
