@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class SignalRService {
   private connection: signalR.HubConnection;
-  private baseUrl = 'https://localhost:7224/MessageHub'; // Cambiar por la URL de tu API
+  private baseUrl = 'https://f1a1-181-88-211-147.ngrok-free.app/MessageHub'; // Cambiar por la URL de tu API
 
   constructor(private http: HttpClient) {
     this.connection = new signalR.HubConnectionBuilder()
