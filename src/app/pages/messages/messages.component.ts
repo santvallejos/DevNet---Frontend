@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 })
 export class MessagesComponent implements OnInit, OnDestroy {
   senderEmail: string = '';
-  receiverEmail = '';
   message = '';
   chatLog: { sender: string; message: string }[] = [];
   isCollapsed = false;
@@ -37,20 +36,26 @@ export class MessagesComponent implements OnInit, OnDestroy {
     });
 
     // Cargar mensajes iniciales desde la base de datos
-    this.loadChatHistory();
+    //this.loadChatHistory();
   }
 
   sendMessage(): void {
-    if (this.receiverEmail && this.message) {
+    var c : number | null = null;
+    const receiverEmail = this.messageHubService.receiverEmail;
+    if (receiverEmail && this.message) {
       this.messageHubService.sendMessage(
         this.senderEmail,
-        this.receiverEmail,
+        receiverEmail,
         this.message
       );
 
-      this.chatLog.push({ sender: this.senderEmail, message: this.message });
+      c = this.chatLog.push({ sender: this.senderEmail, message: this.message });
+      
       this.message = '';
     }
+
+    console.log(`Mensaje enviado con estatus: ${c}\nReceiver: ${this.receiverEmail}\nMessage: ${this.message}`);
+
   }
 
   ngOnDestroy(): void {
@@ -60,15 +65,20 @@ export class MessagesComponent implements OnInit, OnDestroy {
   onSidebarStateChange(isCollapsed: boolean): void {
     this.sidebarCollapsed = isCollapsed;
   }
-
+  
+  receiverEmail(){
+    return this.messageHubService.receiverEmail;
+  }
+  /*
   private loadChatHistory(): void {
     this.messageHubService.getChatHistory(this.senderEmail, this.receiverEmail).subscribe({
-      next: (messages) => {
+      next: (messages: { sender: string; message: string; }[]) => {
         this.chatLog = messages;
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error loading chat history:', err);
       },
     });
   }
+    */
 }

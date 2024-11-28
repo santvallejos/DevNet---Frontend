@@ -87,6 +87,11 @@
             <span *ngIf="!isCollapsed" class="ms-3">Messages</span>
             <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
           </a>
+          <ul id="dropdown-example" class="py-2 space-y-2" *ngIf="currentUrl === '/pages/messages' && !isCollapsed">
+            <li *ngFor="let user of connectedUsers()" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+              <button (click)="receiverUser(user)" *ngIf="user !== senderEmail()">{{ user }}</button>
+            </li>
+          </ul>
         </li>
 
         <!-- Profile -->
@@ -114,6 +119,7 @@
               </svg>
               <span *ngIf="!isCollapsed" class="ms-3">Log Out</span>
           </a>
+
       </li>
         
         

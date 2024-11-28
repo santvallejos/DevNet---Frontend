@@ -1,42 +1,81 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignalRService {
-  private connection: signalR.HubConnection;
-  private baseUrl = 'https://localhost:7224/MessageHub'; // Cambiar por la URL de tu API
+  //correo del usuario
+  senderEmail: string = '';
+  hubConnection: signalR.HubConnection;
+  private hubUrl = 'https://localhost:7224/MessageHub'; //Url de Hub
+  //Lista de usuarios conectados
+  connectedUsers: string[] = [];
+  receiverEmail: string = "";
 
-  constructor(private http: HttpClient) {
-    this.connection = new signalR.HubConnectionBuilder()
-      .withUrl(`${this.baseUrl}/chatHub`)
+  constructor() {
+    //Declara donde conectarse
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(this.hubUrl, {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      })
+      .withAutomaticReconnect()
       .build();
+
+    // Obtiene el email del usuario desde localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      this.senderEmail = userEmail; // Asigna el email al senderEmail
+    } else {
+      console.warn('No user email found in localStorage.');
+    }
+
+    //Inicia la conexion
+    this.hubConnection.start()
+      .then(() => console.log('connection started'))
+        .then(result => {
+          this.hubConnection.invoke('RegisterConnection', userEmail)
+            .then(() => console.log(`Connection registered for ${userEmail}`))
+              .catch(err => console.error('Error registering connection: ', err));
+      })
+      .catch(err => console.error('Error starting connection: ', err));
+
+      this.addListeners();
   }
 
-  startConnection(): void {
-    this.connection
-      .start()
-      .catch((err) => console.error('Error starting SignalR connection:', err));
-  }
+  
 
+  //Detener la conexion
   stopConnection(): void {
-    this.connection.stop();
+    this.hubConnection.stop().catch(err => console.error('Error stopping connection: ', err));
   }
 
-  sendMessage(sender: string, receiver: string, message: string): void {
-    this.connection.invoke('SendMessage', sender, receiver, message).catch((err) => console.error(err));
+  //Función principal de mandar un mensaje
+  sendMessage(userEmail: string, receiverEmail: string, message: string): void {
+    this.hubConnection.invoke('SendMessage', userEmail, receiverEmail, message)
+      .catch(err => console.error('Error sending message: ', err));
   }
 
+  //Escuchar los mensajes entrantes
   onReceiveMessage(callback: (sender: string, message: string) => void): void {
-    this.connection.on('ReceiveMessage', callback);
+    this.hubConnection.on('ReceiveMessage', callback);
   }
 
-  getChatHistory(sender: string, receiver: string): Observable<{ sender: string; message: string }[]> {
-    return this.http.get<{ sender: string; message: string }[]>(
-      `${this.baseUrl}/chat/history?sender=${sender}&receiver=${receiver}`
-    );
+  //Notificar que un usuario se desconecto
+  onUserOffline(callback: (message: string) => void): void {
+    this.hubConnection.on('UserOffline', callback);
+  }
+
+  //Actualizar la lista de usuarios conectados
+  private addListeners() {
+    this.hubConnection.on('UpdateUserList', (users: string[]) => {
+      this.connectedUsers = users;
+    });
+  }
+
+  //Enviar la lista a los componentes
+  getUsers(): string[] {
+    return this.connectedUsers;
   }
 }

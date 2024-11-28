@@ -1,16 +1,17 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FlowbiteService } from '../../services/flowbite.service';
 import { AuthService } from '../../services/auth.service';
 import { UserSessionInfo } from '../../core/models/user';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { SignalRService } from '../../services/signal-r.service';
 
 @Component({
    selector: 'app-sidebar',
    standalone: true,
-   imports: [CommonModule, RouterModule],
+   imports: [CommonModule, RouterModule, NgIf, NgFor],
    templateUrl: './sidebar.component.html',
    styleUrls: ['./sidebar.component.css']
 })
@@ -19,13 +20,17 @@ export class SidebarComponent implements OnInit {
    @Output() sidebarStateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
    userId: string = '';
    isCollapsed: boolean = false;
+   currentUrl: string;
 
    constructor(
      private flowbiteService: FlowbiteService,
      private authService: AuthService,
      private router: Router,
-     private toastr: ToastrService
-   ) {}
+     private toastr: ToastrService,
+     private messageHub: SignalRService
+   ) {
+    this.currentUrl = this.router.url;
+   }
 
    ngOnInit(): void {
      // Load sidebar state from local storage, defaulting to false
@@ -98,4 +103,16 @@ export class SidebarComponent implements OnInit {
        this.toastr.error('No se pudo encontrar el usuario.');
      }
    }
+
+   connectedUsers(){
+    return this.messageHub.getUsers();
+   }
+
+   receiverUser(receiverEmail: string): void {
+    this.messageHub.receiverEmail = receiverEmail;
+  }
+
+  senderEmail(){
+    return this.messageHub.senderEmail;
+  }
 }
