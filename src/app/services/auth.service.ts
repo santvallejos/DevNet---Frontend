@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { JsonHubProtocol } from '@microsoft/signalr';
 
 @Injectable({
   providedIn: 'root',
@@ -32,8 +33,26 @@ export class AuthService {
       const userEmail = this.getItem('userEmail');
       
       if (userSession) {
-        this.currentUser.email = userEmail || '';
-        this.currentUserSubject.next(this.currentUser);
+        //chequear fecha expiracion del token
+        console.log(JSON.parse(userSession));
+        const data = JSON.parse(userSession).data;
+        const token = data.token;
+
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Convertir a Base64 estándar
+        const decodedPayload = JSON.parse(atob(base64));
+        const expirationTimestamp = decodedPayload.exp;
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+        
+        if (expirationTimestamp > currentTimestamp)
+        {
+          this.currentUser.email = userEmail || '';
+          this.currentUserSubject.next(this.currentUser);
+        }
+        else
+        {
+          this.logout();
+        }
       }
     }
     this.authStateInitialized.next(true);
@@ -62,6 +81,7 @@ export class AuthService {
       localStorage.clear();
     }
   }
+
   login(loginForm: LoginRequest) {
     return this.http.post(`${this.base_url}/Auth/login`, loginForm).pipe(
       map((response: any) => {
