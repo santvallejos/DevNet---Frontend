@@ -45,8 +45,9 @@ export class PublicationComponent implements OnInit {
                 createdAt: createdDate.toLocaleDateString('en-US'), // Formato estándar MM/DD/YYYY
                 profileImageUrl: data.profileImageUrl || 'assets/blank-profile.png',
                 mediaUrl: data.mediaUrl,
-                likes: Array.isArray(data.likes) ? data.likes.length() : 0,
-                commentaries: Array.isArray(data.commentaries) ? data.commentaries.length() : 0
+                liked: false,
+                likes: data.likeCount,
+                commentaries: data.commentCount
               };
             })
           )
@@ -82,5 +83,16 @@ export class PublicationComponent implements OnInit {
     }
 
     return "";
+  }
+
+  toggleLike(post : any)
+  {
+    post.liked = !post.liked;
+  }
+
+  getLikes(post : any)
+  {
+    if (post.liked) return post.likes+1;
+    return post.likes;
   }
 }

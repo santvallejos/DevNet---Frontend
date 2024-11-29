@@ -5,12 +5,12 @@ import { SidebarComponent } from '../../shared/sidebar/sidebar.component';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { PublicationComponent } from "../publication/publication.component";
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [SidebarComponent, PublicationComponent, NgIf, NgFor],
+  imports: [CommonModule, SidebarComponent, PublicationComponent, NgIf, NgFor],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })

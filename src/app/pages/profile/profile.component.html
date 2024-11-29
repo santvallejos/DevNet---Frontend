@@ -1,13 +1,11 @@
 <app-sidebar (sidebarStateChange)="onSidebarStateChange($event)"></app-sidebar>
 
-<div class="lg:ml-64 contentProfile overflow-y-auto h-screen">
+<div class="lg:ml-64 profile-container overflow-y-auto h-screen" 
+  [ngClass]="{'sidebar-collapsed': sidebarCollapsed, 'sidebar-expanded': !sidebarCollapsed}">
   <div class="flex justify-center">
     <section class="profile border border-y-0 border-gray-800 max-w-4xl w-full">
       <!-- User -->
       <div>
-        <div class="w-full bg-cover bg-no-repeat bg-center h-48 bg-slate-900" style="background-image: url();">
-          <img class="opacity-0 w-full h-full" src="" alt="" />
-        </div>
         <div class="p-4">
           <div class="relative flex w-full">
             <!-- Avatar -->

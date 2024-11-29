@@ -89,8 +89,12 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.comments-button{ 
+  margin-left: auto; 
+}
 /* Pie de publicación */
 .post-footer {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -125,6 +129,38 @@
   .feed-container {
     padding: 2rem 4rem; /* Más espacio lateral en landscape */
   }
+}
+
+.like-button {
+  display: flex;
+  width: auto;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+
+/* Estilo del input (checkbox) oculto */
+.like-checkbox {
+  display: none; /* Ocultar el checkbox */
+}
+
+/* Estilos iniciales para el botón de like */
+.like-button .likes {
+  font-size: 1rem;
+  color: #555555;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Estilos cuando el like se encuentra activo (checkbox marcado) */
+.like-checkbox:checked + .likes {
+  color: #e74c3c; /* Color rojo para el like activado */
+  transform: scale(1.1); /* Aumentar un poco el tamaño cuando se marca */
+}
+
+/* Efecto visual cuando el mouse pasa sobre el botón de like */
+.like-button:hover .likes {
+  color: #0077cc; /* Color azul en hover */
+  transform: scale(1.05); /* Ligeramente más grande en hover */
 }
 
 
