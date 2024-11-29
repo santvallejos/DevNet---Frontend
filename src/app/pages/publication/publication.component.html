@@ -1,5 +1,5 @@
 <div class="feed-container">
-  <div class="post-card" *ngFor="let post of posts">
+  <ul class="post-card" *ngFor="let post of posts">
     <div class="post-header">
       <div class="user-info">
         <img *ngIf="post.profileImageUrl" [src]="post.profileImageUrl" alt="User profile" class="profile-pic" />
@@ -25,6 +25,6 @@
       </div>
     </button>
     </div>
-  </div>
+  </ul>
 </div>
 

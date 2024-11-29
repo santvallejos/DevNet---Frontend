@@ -107,6 +107,7 @@ export class AuthService {
     return this.http.post(`${this.base_url}/Auth/register`, registerData).pipe(
       tap({
         next: (response: any) => {
+          
           this.setItem('userSession', JSON.stringify(response));
           this.setItem('userEmail', registerData.username);
           this.currentUser.email = registerData.username;

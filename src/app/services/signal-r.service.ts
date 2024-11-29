@@ -8,9 +8,14 @@ export class SignalRService {
   //correo del usuario
   senderEmail: string = '';
   hubConnection: signalR.HubConnection;
-  private hubUrl = 'https://7666-181-88-211-147.ngrok-free.app/MessageHub'; //https://localhost:7224/MessageHub';                    
+  
+  //'https://7666-181-88-211-147.ngrok-free.app/MessageHub'
+  //'https://localhost:7224/MessageHub'
+  private hubUrl = 'https://localhost:7224/MessageHub'; //Url de Hub
+  
   //Lista de usuarios conectados
   connectedUsers: string[] = [];
+  
   receiverEmail: string = "";
 
   constructor() {
