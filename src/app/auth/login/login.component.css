@@ -4,7 +4,7 @@ a {
     text-decoration: underline; /* Para dar el estilo estándar de enlace */
   }
   .bg-image {
-    background-image: url('/assets/redSocial.jpg');
+    background-image: url('/assets/CrearPostFondo2.jpeg');
     background-size: cover; /* Asegura que la imagen cubra todo el área */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */

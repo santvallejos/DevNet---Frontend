@@ -86,7 +86,6 @@
               <path d="M880-80 720-240H320q-33 0-56.5-23.5T240-320v-40h440q33 0 56.5-23.5T760-440v-280h40q33 0 56.5 23.5T880-640v560ZM160-473l47-47h393v-280H160v327ZM80-280v-520q0-33 23.5-56.5T160-880h440q33 0 56.5 23.5T680-800v280q0 33-23.5 56.5T600-440H240L80-280Zm80-240v-280 280Z" />
             </svg>
             <span *ngIf="!isCollapsed" class="ms-3">Mensajes</span>
-            <span class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
           </a>
           <ul id="dropdown-example" class="py-2 space-y-2" *ngIf="currentUrl === '/pages/messages' && !isCollapsed">
             <p class="p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" *ngIf="!hayUsuariosConectados()">No hay ningún seguidor conectado.</p>
