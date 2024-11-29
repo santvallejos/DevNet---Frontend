@@ -1,6 +1,6 @@
 /* Estilos generales para el contenedor principal */
 .home-container {
-  background-image: url('/assets/CrearPostFondo3.jpeg'); /* Ruta de la imagen */
+  background-image: url('/assets/CrearPostFondo2.jpeg'); /* Ruta de la imagen */
   background-size: cover;                      /* Hace que la imagen cubra todo el espacio del contenedor */
   background-position: center center;          /* Centra la imagen */
   background-repeat: no-repeat;                /* Previene que la imagen se repita */
