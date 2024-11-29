@@ -13,16 +13,16 @@
         <span class="flex-1 truncate font-medium text-base">{{ receiverEmail() }}</span>
       </div>
       <!-- aviso debe seleccionar un usuario -->
-      <div *ngIf="receiverEmail() == ''" 
-     class="flex flex-col items-center justify-center h-full p-6 text-center text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg animate-fade-in">
+      <div *ngIf="receiverEmail() == ''" class="flex flex-col items-center justify-center h-full p-6 text-center text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg animate-fade-in">
         <!-- loogo -->
         <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-blue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v7a2 2 0 01-2 2H7l-4 4v-4H3a2 2 0 01-2-2V8a2 2 0 012-2h14z" />
         </svg>
         <p class="max-w-md mb-4 text-lg">
           Select a user from the sidebar to start chatting.
-        </p>         
-       <div *ngIf="receiverEmail() != ''">
+        </p>    
+      </div>     
+      <div *ngIf="receiverEmail() != ''">
         <div *ngFor="let log of chatLog" class="px-4 py-2">
           <!-- left message -->
           <div *ngIf="log.sender != senderEmail;" class="flex items-center mb-2">
@@ -61,15 +61,13 @@
           </div>
         </div>
       </div>
-    </div> 
-    <!-- Input Area -->
-    <div class="message-input-area">
-      <div class="flex items-center space-x-4">
-        <input [(ngModel)]="message" class="w-full border rounded-full py-2 px-4 mr-2" type="text" placeholder="Type your message...">
-        <button (click)="sendMessage()" class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full">Send</button>
-      </div>
+    </div>   
+  </div>
+  <!-- Input Area -->
+  <div class="message-input-area">
+    <div class="flex items-center space-x-4">
+      <input [(ngModel)]="message" class="w-full border rounded-full py-2 px-4 mr-2" type="text" placeholder="Type your message...">
+      <button (click)="sendMessage()" class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-full">Send</button>
     </div>
-
-    
   </div>
 </div>
