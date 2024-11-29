@@ -42,7 +42,6 @@ export class CreatePostComponent implements OnInit, OnDestroy {
       try {
         const module = await import('@ckeditor/ckeditor5-build-classic');
         this.Editor = module.default;
-        this.toastr.info('Editor de texto cargado correctamente', 'Información');
       } catch (error) {
         console.error('Error loading CKEditor:', error);
         this.toastr.error('No se pudo cargar el editor de texto', 'Error');
