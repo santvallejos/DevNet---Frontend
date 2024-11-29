@@ -15,8 +15,8 @@
 
 /* Cuando el sidebar está expandido */
 .home-container.sidebar-expanded {
-  margin-left: 250px; /* Ajusta según el ancho del sidebar expandido */
-  width: calc(100% - 250px);
+  margin-left: 300px; /* Ajusta según el ancho del sidebar expandido */
+  width: calc(100% - 300px);
   min-width: 250px;
 }
 
@@ -61,6 +61,8 @@
 }
 /* Input de mensajes: siempre abajo */
 .message-input-area {
+  width: 95%;
+  margin: auto;
   background: #e3e8ee; /* Fondo gris claro */
   border-top: 1px solid #ddd; /* Línea superior */
   padding: 10px;

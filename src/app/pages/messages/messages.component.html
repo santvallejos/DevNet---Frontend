@@ -6,12 +6,12 @@
     'sidebar-expanded': !sidebarCollapsed
   }">
   <div class="main-content">
+    <div *ngIf="receiverEmail() != ''" class="user-info flex items-center gap-2.5 p-4 mx-4 my-2 bg-white text-gray-900 rounded-lg shadow-sm">
+      <!-- <img src="/docs/images/people/profile-picture-3.jpg" alt="Selected User" class="w-10 h-10 rounded-full"> -->
+      <span class="flex-1 truncate font-medium text-base">{{ receiverEmail() }}</span>
+    </div>
     <!-- Chat Area -->
-    <div class="chat-container">
-      <div *ngIf="receiverEmail() != ''" class="user-info flex items-center gap-2.5 p-4 mx-4 my-2 bg-white text-gray-900 rounded-lg shadow-sm">
-        <!-- <img src="/docs/images/people/profile-picture-3.jpg" alt="Selected User" class="w-10 h-10 rounded-full"> -->
-        <span class="flex-1 truncate font-medium text-base">{{ receiverEmail() }}</span>
-      </div>
+    <div class="chat-container"> 
       <!-- aviso debe seleccionar un usuario -->
       <div *ngIf="receiverEmail() == ''" class="flex flex-col items-center justify-center h-full p-6 text-center text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg animate-fade-in">
         <!-- loogo -->

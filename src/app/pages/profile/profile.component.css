@@ -4,19 +4,19 @@
     flex-direction: column;
     background-color: #f5f7fa; /* Fondo gris claro */
     height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
-    overflow: hidden; /* Evita que el scroll se aplique a toda la página */
+    overflow: auto; /* Evita que el scroll se aplique a toda la página */
   }
 
   /* Cuando el sidebar está contraído */
  .sidebar-collapsed {
-  margin-left: 80px; 
-  width: calc(100% - 80px); 
+  margin-left: 60px; 
+  width: calc(100% - 60px); 
 } 
 
 /* Cuando el sidebar está extendido */
 .sidebar-expanded {
-  margin-left: 300px; 
-  width: calc(100% - 300); 
+  margin-left: 280px; 
+  width: calc(100% - 280px); 
 } 
   
   /* Área principal de contenido del perfil */

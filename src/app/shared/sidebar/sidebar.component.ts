@@ -124,4 +124,9 @@ export class SidebarComponent implements OnInit {
    post(){
     this.router.navigate(['pages/post']);
    }
+
+   hayUsuariosConectados(){
+    if (this.connectedUsers().length > 1) return true;
+    return false;
+   }
 }
