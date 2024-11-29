@@ -115,4 +115,9 @@ export class SidebarComponent implements OnInit {
   senderEmail(){
     return this.messageHub.senderEmail;
   }
+
+  redirecToProfile() {
+    const userId = this.authService.getCurrentUserId();
+    this.router.navigate([`/pages/profile/${userId}`]); 
+  }
 }

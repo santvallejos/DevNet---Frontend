@@ -12,8 +12,17 @@
         <!-- <img src="/docs/images/people/profile-picture-3.jpg" alt="Selected User" class="w-10 h-10 rounded-full"> -->
         <span class="flex-1 truncate font-medium text-base">{{ receiverEmail() }}</span>
       </div>
-      <div *ngIf="receiverEmail() == ''" class="text-sm font-semibold text-gray-900 dark:text-white select-chat-message"> Selecciona un usuario de la barra lateral para empezar a chatear.</div>
-      <div *ngIf="receiverEmail() != ''">
+      <!-- aviso debe seleccionar un usuario -->
+      <div *ngIf="receiverEmail() == ''" 
+     class="flex flex-col items-center justify-center h-full p-6 text-center text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg animate-fade-in">
+        <!-- loogo -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-blue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v7a2 2 0 01-2 2H7l-4 4v-4H3a2 2 0 01-2-2V8a2 2 0 012-2h14z" />
+        </svg>
+        <p class="max-w-md mb-4 text-lg">
+          Select a user from the sidebar to start chatting.
+        </p>         
+       <div *ngIf="receiverEmail() != ''">
         <div *ngFor="let log of chatLog" class="px-4 py-2">
           <!-- left message -->
           <div *ngIf="log.sender != senderEmail;" class="flex items-center mb-2">

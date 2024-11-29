@@ -5,8 +5,9 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { JsonHubProtocol } from '@microsoft/signalr'
 import { ToastrService } from 'ngx-toastr';
-import { JsonHubProtocol } from '@microsoft/signalr';
+
 
 @Injectable({
   providedIn: 'root',
