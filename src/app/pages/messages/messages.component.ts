@@ -19,10 +19,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   isCollapsed = false;
   sidebarCollapsed: boolean = false;
 
-  constructor(
-    private messageHubService: SignalRService,
-    private authService: AuthService
-  ) {
+  constructor( private messageHubService: SignalRService, private authService: AuthService) {
     const userEmail = localStorage.getItem('userEmail');
     if (userEmail) {
       this.senderEmail = userEmail;

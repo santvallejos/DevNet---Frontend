@@ -83,7 +83,7 @@ export class SidebarComponent implements OnInit {
        localStorage.removeItem('userSession');
        localStorage.removeItem('userEmail');
        localStorage.removeItem('userRole');
-       this.router.navigate(['/login']);
+       this.router.navigate(['auth/login']);
      }
    }
 
@@ -120,4 +120,8 @@ export class SidebarComponent implements OnInit {
     const userId = this.authService.getCurrentUserId();
     this.router.navigate([`/pages/profile/${userId}`]); 
   }
+
+   post(){
+    this.router.navigate(['pages/post']);
+   }
 }
