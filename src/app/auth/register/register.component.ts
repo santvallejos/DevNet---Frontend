@@ -17,11 +17,7 @@ export class RegisterComponent {
   showPassword = false;
   selectedFile: any;
 
-  constructor(
-    private fb: FormBuilder,
-    private route: Router,
-    private authService: AuthService
-  ) {
+  constructor(private fb: FormBuilder, private route: Router, private authService: AuthService) {
     this.form = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],

@@ -8,3 +8,13 @@ export interface Publication {
     comments: number;
     isLiked: boolean;
   }
+
+  export interface Post {
+    userId: string;
+    text: string;
+    mediaUrl?: string | null;
+    createdAt?: string;
+    updatedAt?: string;
+  }
+  
+  

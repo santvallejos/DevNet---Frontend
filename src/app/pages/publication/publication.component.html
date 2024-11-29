@@ -9,7 +9,7 @@
     </div>
 
     <div class="post-content">
-      <p class="post-text">{{ post.text }}</p>
+      <p class="post-text" [innerHTML]="post.text"></p>
       <img *ngIf="post.mediaUrl" [src]="post.mediaUrl" alt="Post image" class="post-image" />
     </div>
 
