@@ -14,7 +14,10 @@ import { Router } from '@angular/router';
 export class PostService {
   private base_url = environment.base_url;
 
-  constructor(private http: HttpClient, private headerInject: HeaderInjector,  private toastr: ToastrService, private router: Router,) {}
+  constructor(private http: HttpClient,
+    private headerInject: HeaderInjector,
+    private toastr: ToastrService,
+    private router: Router) {}
 
   // Obtener todos los posts
   getPosts(): Observable<any[]> {
@@ -43,8 +46,10 @@ export class PostService {
     
     // Obtener el userId del usuario logueado desde el sessionStorage o cualquier otro lugar donde lo guardes
     const userSession = JSON.parse(localStorage.getItem('userSession') || '{}');
-    const userId = userSession?.id; // Asegúrate de que el campo 'id' exista en la respuesta del login
-  
+    const userId : string = userSession.data.userId; // Asegúrate de que el campo 'id' exista en la respuesta del login
+    
+    console.log(userSession);
+    console.log(userId);
     // Verificar si el userId está disponible
     if (!userId) {
       this.toastr.error('Usuario no autenticado. No se puede crear el post.');
@@ -55,10 +60,13 @@ export class PostService {
     const postData = {
       userId: userId,  // Agregar el userId
       text: post.text, // El contenido del post
-      mediaUrl: post.mediaUrl || null  // Si hay mediaUrl, lo incluimos, sino es null
+      mediaUrl: post.mediaUrl != null ? post.mediaUrl : ""  // Si hay mediaUrl, lo incluimos, sino es null
     };
-  
-    return this.http.post(`${this.base_url}/Posts`, postData).pipe(
+    
+    
+    const headers = this.headerInject.injectHeader();
+
+    return this.http.post(`${this.base_url}/Posts`, postData,{headers}).pipe(
       tap({
         next: (response: any) => {
           // Acción cuando el post se crea exitosamente

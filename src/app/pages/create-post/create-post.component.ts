@@ -78,7 +78,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
       console.error('El contenido del post está vacío.');
       return;
     }
-    debugger
+    
     // Obtener el userId del usuario logueado desde el localStorage o sessionStorage
     const userSession = JSON.parse(localStorage.getItem('userSession') || '{}');  
     const id = userSession.data?.userId;
@@ -88,7 +88,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     const postToSubmit: Post = {
       userId: id, // El ID del usuario logueado
       text: this.postContent, // El contenido del post desde CKEditor
-      mediaUrl: this.mediaUrl || null,
+      mediaUrl: this.mediaUrl || "",
     };
   
     console.log('Datos del post a enviar:', postToSubmit);
